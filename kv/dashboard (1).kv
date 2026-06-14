@@ -1,0 +1,307 @@
+#:kivy 2.0
+
+<DashboardScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: 0.957, 0.961, 0.980, 1
+
+        # ── TOP BAR ──────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(58)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(10), dp(8), dp(10), dp(8)
+
+            MDBoxLayout:
+                size_hint_x: 1
+
+            Image:
+                source: "assets/bell.png"
+                size_hint: None, None
+                size: dp(26), dp(26)
+                pos_hint: {"center_y": 0.5}
+
+            MDIconButton:
+                icon: "account-circle-outline"
+                theme_icon_color: "Custom"
+                icon_color: 0.1, 0.1, 0.1, 1
+                icon_size: dp(30)
+                size_hint_x: None
+                width: dp(44)
+
+        # Divider
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.88, 0.88, 0.88, 1
+
+        # ── SCROLL BODY ───────────────────────────────────────────
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(14), dp(16), dp(14), dp(24)
+                spacing: dp(20)
+
+                # ── SEARCH BAR ────────────────────────────────────
+                MDCard:
+                    md_bg_color: 1, 1, 1, 1
+                    radius: [dp(14)]
+                    elevation: 1
+                    size_hint_y: None
+                    height: dp(62)
+                    padding: dp(10), dp(8), dp(10), dp(8)
+
+                    MDCard:
+                        md_bg_color: 0.918, 0.918, 0.918, 1
+                        radius: [dp(28)]
+                        elevation: 0
+                        padding: dp(14), 0, dp(14), 0
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            spacing: dp(8)
+
+                            MDIcon:
+                                icon: "magnify"
+                                theme_icon_color: "Custom"
+                                icon_color: 0.50, 0.50, 0.50, 1
+                                size_hint_x: None
+                                width: dp(24)
+                                font_size: dp(20)
+                                pos_hint: {"center_y": 0.5}
+
+                            TextInput:
+                                hint_text: "कुठे जायचे आहे?"
+                                hint_text_color: 0.50, 0.50, 0.50, 1
+                                foreground_color: 0.1, 0.1, 0.1, 1
+                                background_color: 0, 0, 0, 0
+                                cursor_color: 0.1, 0.1, 0.1, 1
+                                font_size: dp(15)
+                                multiline: False
+                                size_hint_y: None
+                                height: dp(40)
+                                padding: [0, dp(10), 0, dp(10)]
+                                border: (0, 0, 0, 0)
+                                background_normal: ""
+                                background_active: ""
+
+                # ── LARGE CARDS ───────────────────────────────────
+                MDGridLayout:
+                    cols: 2
+                    spacing: dp(12)
+                    adaptive_height: True
+
+                    # Bus Ticket
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(16)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(130)
+                        ripple_behavior: True
+                        on_release: root.navigate_to("bus_ticket")
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(10), dp(16), dp(10), dp(14)
+                            spacing: dp(10)
+
+                            Image:
+                                source: "assets/Bus_Ticket.png"
+                                size_hint: None, None
+                                size: dp(70), dp(70)
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                            MDLabel:
+                                text: "Bus Ticket"
+                                halign: "center"
+                                valign: "middle"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Subtitle1"
+                                size_hint_y: None
+                                height: dp(28)
+
+                    # Daily Pass
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(16)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(150)
+                        ripple_behavior: True
+                        on_release: root.navigate_to("daily_pass")
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(10), dp(16), dp(10), dp(14)
+                            spacing: dp(10)
+
+                            Image:
+                                source: "assets/Daily_Pass.png"
+                                size_hint: None, None
+                                size: dp(70), dp(70)
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                            MDLabel:
+                                text: "Daily Pass"
+                                halign: "center"
+                                valign: "middle"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Subtitle1"
+                                size_hint_y: None
+                                height: dp(28)
+
+                # ── SMALL CARDS ───────────────────────────────────
+                MDGridLayout:
+                    cols: 4
+                    spacing: dp(10)
+                    adaptive_height: True
+
+                    # View Ticket
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(14)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(90)
+                        ripple_behavior: True
+                        on_release: root.navigate_to("view_ticket")
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(4), dp(12), dp(4), dp(10)
+                            spacing: dp(6)
+
+                            MDBoxLayout:
+                                size_hint_y: 1
+
+                            Image:
+                                source: "assets/View_Ticket.png"
+                                size_hint: None, None
+                                size: dp(45), dp(45)
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5} 
+
+                            MDLabel:
+                                text: "View\nTicket"
+                                halign: "center"
+                                valign: "top"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Caption"
+                                line_height: 1.2
+                                size_hint_y: None
+                                height: dp(28)
+
+                    # View Pass
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(14)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(90)
+                        ripple_behavior: True
+                        on_release: root.navigate_to("view_pass")
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(4), dp(12), dp(4), dp(10)
+                            spacing: dp(6)
+
+                            MDBoxLayout:
+                                size_hint_y: 1
+
+                            Image:
+                                source: "assets/View_Pass.png"
+                                size_hint: None, None
+                                size: dp(45), dp(45)
+                                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                            MDLabel:
+                                text: "View\nPass"
+                                halign: "center"
+                                valign: "top"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Caption"
+                                line_height: 1.2
+                                size_hint_y: None
+                                height: dp(28)
+
+                    # Route Timetable
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(14)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(90)
+                        ripple_behavior: True
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(4), dp(12), dp(4), dp(10)
+                            spacing: dp(6)
+
+                            MDBoxLayout:
+                                size_hint_y: 1
+
+                                MDIcon:
+                                    icon: "call-split"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 0.08, 0.08, 0.08, 1
+                                    font_size: dp(28)
+                                    halign: "center"
+                                    valign: "middle"
+
+                            MDLabel:
+                                text: "Route Ti\nmetable"
+                                halign: "center"
+                                valign: "top"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Caption"
+                                line_height: 1.2
+                                size_hint_y: None
+                                height: dp(28)
+
+                    # Metro Ticket
+                    MDCard:
+                        md_bg_color: 0.898, 0.953, 0.984, 1
+                        radius: [dp(14)]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(90)
+                        ripple_behavior: True
+
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            padding: dp(4), dp(12), dp(4), dp(10)
+                            spacing: dp(6)
+
+                            MDBoxLayout:
+                                size_hint_y: 1
+
+                                MDIcon:
+                                    icon: "ticket-confirmation"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 0.95, 0.95, 0.95, 1
+                                    font_size: dp(28)
+                                    halign: "center"
+                                    valign: "middle"
+
+                            MDLabel:
+                                text: "Metro\nTicket"
+                                halign: "center"
+                                valign: "top"
+                                theme_text_color: "Custom"
+                                text_color: 0.08, 0.08, 0.08, 1
+                                font_style: "Caption"
+                                line_height: 1.2
+                                size_hint_y: None
+                                height: dp(28)
