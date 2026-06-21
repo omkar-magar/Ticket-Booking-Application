@@ -3,7 +3,13 @@ from kivymd.uix.screen import MDScreen
 from kivy.app import App
 from kivy.factory import Factory
 from kivy.properties import StringProperty, NumericProperty
+from kivy.animation import Animation
+from kivy.metrics import dp
 from datetime import datetime, timedelta
+
+# Logo pulse (zoom in/out) sizes for the ticket page.
+LOGO_BASE = 150
+LOGO_ZOOM = 174
 
 # Mock PIN a conductor would enter to verify the ticket (frontend-only demo).
 CONDUCTOR_PIN = "1234"
@@ -29,6 +35,27 @@ class ViewTicketScreen(MDScreen):
         valid = now + timedelta(hours=1)
         self.booking_time = now.strftime("%d %b, %y | %I:%M %p")
         self.validity_time = valid.strftime("%d %b, %y | %I:%M %p")
+
+    def on_enter(self, *args):
+        # Start the looping zoom in/out pulse on the logo.
+        logo = self.ids.get("ticket_logo")
+        if not logo:
+            return
+        base, zoom = dp(LOGO_BASE), dp(LOGO_ZOOM)
+        logo.size = (base, base)
+        anim = (
+            Animation(size=(zoom, zoom), duration=0.9, t="in_out_sine")
+            + Animation(size=(base, base), duration=0.9, t="in_out_sine")
+        )
+        anim.repeat = True
+        anim.start(logo)
+
+    def on_leave(self, *args):
+        # Stop the animation and reset the logo to its base size.
+        logo = self.ids.get("ticket_logo")
+        if logo:
+            Animation.cancel_all(logo)
+            logo.size = (dp(LOGO_BASE), dp(LOGO_BASE))
 
     def show_qr(self):
         # Generate a QR encoding the ticket number and show it in a popup.
