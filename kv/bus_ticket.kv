@@ -1,23 +1,511 @@
 #:kivy 2.0
 
+<StepperBox@MDCard>:
+    # White rounded box used for the +/- buttons and the count display.
+    md_bg_color: 1, 1, 1, 1
+    line_color: 0.85, 0.85, 0.85, 1
+    line_width: 1
+    radius: [dp(8)]
+    elevation: 0
+    size_hint: None, None
+    size: dp(44), dp(44)
+
+
 <BusTicketScreen>:
     MDBoxLayout:
         orientation: "vertical"
-        md_bg_color: 0.957, 0.961, 0.980, 1
+        md_bg_color: 1, 1, 1, 1
 
-        MDTopAppBar:
-            title: "Bus Ticket"
-            left_action_items: [["arrow-left", lambda x: root.go_back()]]
-            md_bg_color: 0.17, 0.75, 0.67, 1
-            specific_text_color: 1, 1, 1, 1
-
+        # ── TOP BAR ───────────────────────────────────────────────
         MDBoxLayout:
-            orientation: "vertical"
-            padding: dp(20)
-            spacing: dp(16)
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(56)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(8), 0, dp(16), 0
+            spacing: dp(4)
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.1, 0.1, 0.1, 1
+                icon_size: dp(26)
+                pos_hint: {"center_y": 0.5}
+                on_release: root.go_back()
 
             MDLabel:
-                text: "Bus Ticket Screen"
-                halign: "center"
-                theme_text_color: "Secondary"
-                font_style: "H6"
+                text: "Ticket Details"
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                bold: True
+                font_size: dp(20)
+                valign: "center"
+
+            MDLabel:
+                text: root.timer_text
+                theme_text_color: "Custom"
+                text_color: 0.3, 0.3, 0.3, 1
+                font_size: dp(20)
+                halign: "right"
+                valign: "center"
+                size_hint_x: None
+                width: dp(70)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.93, 0.93, 0.93, 1
+
+        # ── BODY ──────────────────────────────────────────────────
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(16), dp(16), dp(16), dp(16)
+
+                # ── TICKET CARD ───────────────────────────────────
+                MDCard:
+                    orientation: "vertical"
+                    md_bg_color: 0.965, 0.965, 0.965, 1
+                    radius: [dp(14)]
+                    elevation: 0
+                    line_color: 0.88, 0.88, 0.88, 1
+                    line_width: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 0
+                    spacing: 0
+
+                    # Green header strip
+                    MDCard:
+                        md_bg_color: 0.13, 0.6, 0.3, 1
+                        radius: [dp(14), dp(14), 0, 0]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(52)
+                        padding: dp(20), 0, dp(20), 0
+
+                        MDLabel:
+                            text: root.date_text
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            bold: True
+                            font_size: dp(17)
+                            valign: "center"
+
+                    # ── ROUTE INPUT ───────────────────────────────
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: dp(56)
+                        padding: dp(16), dp(8), dp(16), dp(8)
+                        spacing: dp(14)
+
+                        MDCard:
+                            md_bg_color: 0.13, 0.6, 0.3, 1
+                            radius: [dp(24)]
+                            elevation: 0
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            pos_hint: {"center_y": 0.5}
+
+                            AnchorLayout:
+                                anchor_x: "center"
+                                anchor_y: "center"
+
+                                MDIcon:
+                                    icon: "bus"
+                                    theme_icon_color: "Custom"
+                                    icon_color: 1, 1, 1, 1
+                                    font_size: dp(24)
+                                    halign: "center"
+                                    size_hint: None, None
+                                    size: dp(26), dp(26)
+
+                        MDCard:
+                            md_bg_color: 1, 1, 1, 1
+                            line_color: 0.8, 0.8, 0.8, 1
+                            line_width: 1
+                            radius: [dp(8)]
+                            elevation: 0
+                            padding: dp(12), 0, dp(12), 0
+
+                            TextInput:
+                                hint_text: "Select or enter route"
+                                hint_text_color: 0.45, 0.45, 0.45, 1
+                                foreground_color: 0.1, 0.1, 0.1, 1
+                                background_color: 0, 0, 0, 0
+                                cursor_color: 0.13, 0.6, 0.3, 1
+                                font_size: dp(18)
+                                multiline: False
+                                size_hint_y: None
+                                height: dp(44)
+                                padding: [0, dp(11), 0, dp(11)]
+                                background_normal: ""
+                                background_active: ""
+
+                    # Divider under route
+                    MDBoxLayout:
+                        size_hint_y: None
+                        height: dp(1)
+                        md_bg_color: 0.88, 0.88, 0.88, 1
+                        padding: dp(16), 0, dp(16), 0
+
+                    # ── STOPS TIMELINE ────────────────────────────
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: dp(140)
+                        padding: dp(20), dp(16), dp(20), dp(16)
+
+                        # Starting stop row
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(28)
+                            spacing: dp(14)
+
+                            MDIcon:
+                                icon: "circle-outline"
+                                theme_icon_color: "Custom"
+                                icon_color: 0.3, 0.3, 0.3, 1
+                                font_size: dp(20)
+                                size_hint_x: None
+                                width: dp(22)
+                                halign: "center"
+                                pos_hint: {"center_y": 0.5}
+
+                            MDLabel:
+                                text: "Starting stop"
+                                theme_text_color: "Custom"
+                                text_color: 0.4, 0.4, 0.4, 1
+                                font_size: dp(18)
+                                valign: "center"
+
+                        # Dotted connector
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(44)
+                            spacing: dp(14)
+
+                            MDLabel:
+                                text: "•\n•\n•"
+                                theme_text_color: "Custom"
+                                text_color: 0.35, 0.35, 0.35, 1
+                                font_size: dp(9)
+                                line_height: 1.1
+                                halign: "center"
+                                size_hint_x: None
+                                width: dp(22)
+
+                            Widget:
+
+                        # Ending stop row
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(28)
+                            spacing: dp(14)
+
+                            MDIcon:
+                                icon: "circle-outline"
+                                theme_icon_color: "Custom"
+                                icon_color: 0.15, 0.15, 0.15, 1
+                                font_size: dp(22)
+                                size_hint_x: None
+                                width: dp(22)
+                                halign: "center"
+                                pos_hint: {"center_y": 0.5}
+
+                            MDLabel:
+                                text: "Ending stop"
+                                theme_text_color: "Custom"
+                                text_color: 0.4, 0.4, 0.4, 1
+                                font_size: dp(18)
+                                valign: "center"
+
+                    # ── PERFORATION ───────────────────────────────
+                    Widget:
+                        size_hint_y: None
+                        height: dp(24)
+                        canvas.after:
+                            Color:
+                                rgba: 1, 1, 1, 1
+                            Ellipse:
+                                pos: self.x - dp(12), self.center_y - dp(12)
+                                size: dp(24), dp(24)
+                            Ellipse:
+                                pos: self.right - dp(12), self.center_y - dp(12)
+                                size: dp(24), dp(24)
+                            Color:
+                                rgba: 0.7, 0.7, 0.7, 1
+                            Line:
+                                points: self.x + dp(16), self.center_y, self.right - dp(16), self.center_y
+                                dash_length: dp(6)
+                                dash_offset: dp(4)
+                                width: 1
+
+                    # ── FARE / ENDING TOGGLE ──────────────────────
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: dp(50)
+                        padding: dp(16), 0, dp(16), 0
+                        spacing: dp(12)
+
+                        MDCard:
+                            md_bg_color: (0.13, 0.6, 0.3, 1) if root.mode == "fare" else (1, 1, 1, 1)
+                            line_color: (0.13, 0.6, 0.3, 1) if root.mode == "fare" else (0.8, 0.8, 0.8, 1)
+                            line_width: 1
+                            radius: [dp(8)]
+                            elevation: 0
+                            ripple_behavior: True
+                            on_release: root.set_mode("fare")
+
+                            MDLabel:
+                                text: "By Fare"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: (1, 1, 1, 1) if root.mode == "fare" else (0.2, 0.2, 0.2, 1)
+                                bold: True
+                                font_size: dp(17)
+
+                        MDCard:
+                            md_bg_color: (0.13, 0.6, 0.3, 1) if root.mode == "ending" else (1, 1, 1, 1)
+                            line_color: (0.13, 0.6, 0.3, 1) if root.mode == "ending" else (0.8, 0.8, 0.8, 1)
+                            line_width: 1
+                            radius: [dp(8)]
+                            elevation: 0
+                            ripple_behavior: True
+                            on_release: root.set_mode("ending")
+
+                            MDLabel:
+                                text: "By Ending stop"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: (1, 1, 1, 1) if root.mode == "ending" else (0.2, 0.2, 0.2, 1)
+                                bold: True
+                                font_size: dp(17)
+
+                    # ── TICKET PRICE ──────────────────────────────
+                    MDLabel:
+                        text: "Ticket Price"
+                        theme_text_color: "Custom"
+                        text_color: 0.45, 0.45, 0.45, 1
+                        font_size: dp(18)
+                        size_hint_y: None
+                        height: dp(46)
+                        padding_x: dp(16)
+                        valign: "center"
+
+                    # ── SELECT TICKETS ────────────────────────────
+                    MDLabel:
+                        text: "Select Tickets"
+                        theme_text_color: "Custom"
+                        text_color: 0.45, 0.45, 0.45, 1
+                        font_size: dp(18)
+                        size_hint_y: None
+                        height: dp(40)
+                        padding_x: dp(16)
+                        valign: "center"
+
+                    # Full row
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: dp(60)
+                        padding: dp(16), dp(4), dp(16), dp(4)
+                        spacing: dp(10)
+
+                        MDLabel:
+                            text: "Full"
+                            theme_text_color: "Custom"
+                            text_color: 0.1, 0.1, 0.1, 1
+                            font_size: dp(20)
+                            valign: "center"
+
+                        StepperBox:
+                            pos_hint: {"center_y": 0.5}
+                            ripple_behavior: True
+                            on_release: root.dec_full()
+                            MDLabel:
+                                text: "-"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.2, 0.2, 0.2, 1
+                                font_size: dp(24)
+
+                        StepperBox:
+                            line_color: 0.9, 0.9, 0.9, 1
+                            pos_hint: {"center_y": 0.5}
+                            MDLabel:
+                                text: str(root.full_count)
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                font_size: dp(20)
+
+                        StepperBox:
+                            pos_hint: {"center_y": 0.5}
+                            ripple_behavior: True
+                            on_release: root.inc_full()
+                            MDLabel:
+                                text: "+"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.2, 0.2, 0.2, 1
+                                font_size: dp(22)
+
+                    # Half row
+                    MDBoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: None
+                        height: dp(60)
+                        padding: dp(16), dp(4), dp(16), dp(12)
+                        spacing: dp(10)
+
+                        MDLabel:
+                            text: "Half"
+                            theme_text_color: "Custom"
+                            text_color: 0.1, 0.1, 0.1, 1
+                            font_size: dp(20)
+                            valign: "center"
+
+                        StepperBox:
+                            pos_hint: {"center_y": 0.5}
+                            ripple_behavior: True
+                            on_release: root.dec_half()
+                            MDLabel:
+                                text: "-"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.2, 0.2, 0.2, 1
+                                font_size: dp(24)
+
+                        StepperBox:
+                            line_color: 0.9, 0.9, 0.9, 1
+                            pos_hint: {"center_y": 0.5}
+                            MDLabel:
+                                text: str(root.half_count)
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                font_size: dp(20)
+
+                        StepperBox:
+                            pos_hint: {"center_y": 0.5}
+                            ripple_behavior: True
+                            on_release: root.inc_half()
+                            MDLabel:
+                                text: "+"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 0.2, 0.2, 0.2, 1
+                                font_size: dp(22)
+
+        # ── BOTTOM PAY BAR ────────────────────────────────────────
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.9, 0.9, 0.9, 1
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(84)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(16), dp(12), dp(16), dp(12)
+            spacing: dp(14)
+
+            MDBoxLayout:
+                orientation: "vertical"
+                size_hint_x: None
+                width: dp(120)
+                spacing: dp(4)
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(20)
+                    spacing: dp(4)
+
+                    MDLabel:
+                        text: "PAY USING"
+                        theme_text_color: "Custom"
+                        text_color: 0.5, 0.5, 0.5, 1
+                        font_size: dp(13)
+                        underline: True
+                        size_hint_x: None
+                        width: dp(78)
+                        valign: "center"
+
+                    MDIcon:
+                        icon: "menu-up"
+                        theme_icon_color: "Custom"
+                        icon_color: 0.4, 0.4, 0.4, 1
+                        font_size: dp(18)
+                        size_hint_x: None
+                        width: dp(20)
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: None
+                    height: dp(28)
+                    spacing: dp(8)
+
+                    MDCard:
+                        md_bg_color: 0.42, 0.18, 0.62, 1
+                        radius: [dp(5)]
+                        elevation: 0
+                        size_hint: None, None
+                        size: dp(24), dp(24)
+                        pos_hint: {"center_y": 0.5}
+
+                        AnchorLayout:
+                            anchor_x: "center"
+                            anchor_y: "center"
+
+                            MDLabel:
+                                text: "पे"
+                                font_name: "Devanagari"
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 1, 1, 1, 1
+                                font_size: dp(12)
+                                bold: True
+
+                    MDLabel:
+                        text: "PhonePe"
+                        theme_text_color: "Custom"
+                        text_color: 0.1, 0.1, 0.1, 1
+                        bold: True
+                        font_size: dp(16)
+                        valign: "center"
+
+            MDCard:
+                md_bg_color: 0.13, 0.6, 0.3, 1
+                radius: [dp(10)]
+                elevation: 0
+                ripple_behavior: True
+
+                MDLabel:
+                    text: "Pay"
+                    halign: "center"
+                    valign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    bold: True
+                    font_size: dp(22)

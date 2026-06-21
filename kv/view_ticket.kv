@@ -1,22 +1,613 @@
 #:kivy 2.0
 
+<QRCodeModal@ModalView>:
+    qr_source: ""
+    size_hint: 0.92, None
+    height: dp(440)
+    background: ""
+    background_color: 0, 0, 0, 0
+    overlay_color: 0, 0, 0, 0.5
+    auto_dismiss: True
+
+    MDCard:
+        orientation: "vertical"
+        md_bg_color: 1, 1, 1, 1
+        radius: [dp(8)]
+        elevation: 0
+        padding: dp(12)
+        spacing: dp(4)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(36)
+
+            Widget:
+
+            MDIconButton:
+                icon: "close"
+                theme_icon_color: "Custom"
+                icon_color: 0.2, 0.2, 0.2, 1
+                icon_size: dp(26)
+                on_release: root.dismiss()
+
+        AnchorLayout:
+            anchor_x: "center"
+            anchor_y: "center"
+
+            Image:
+                source: root.qr_source
+                nocache: True
+                size_hint: None, None
+                size: dp(320), dp(320)
+                allow_stretch: True
+                keep_ratio: True
+
+
+<ConductorVerifyModal@ModalView>:
+    screen: None
+    size_hint: 0.92, None
+    height: dp(460)
+    background: ""
+    background_color: 0, 0, 0, 0
+    overlay_color: 0, 0, 0, 0.5
+    auto_dismiss: True
+
+    MDCard:
+        orientation: "vertical"
+        md_bg_color: 1, 1, 1, 1
+        radius: [dp(16)]
+        elevation: 0
+        padding: dp(20), dp(12), dp(20), dp(16)
+        spacing: dp(10)
+
+        # Title row with lock + close
+        FloatLayout:
+            size_hint_y: None
+            height: dp(36)
+
+            MDBoxLayout:
+                adaptive_width: True
+                spacing: dp(8)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+                MDIcon:
+                    icon: "lock-outline"
+                    theme_icon_color: "Custom"
+                    icon_color: 0.2, 0.2, 0.2, 1
+                    font_size: dp(24)
+                    size_hint_x: None
+                    width: dp(28)
+
+                MDLabel:
+                    text: "Conductor Verification"
+                    theme_text_color: "Custom"
+                    text_color: 0.1, 0.1, 0.1, 1
+                    bold: True
+                    font_size: dp(22)
+                    adaptive_size: True
+                    valign: "center"
+
+            MDIconButton:
+                icon: "close"
+                theme_icon_color: "Custom"
+                icon_color: 0.3, 0.3, 0.3, 1
+                icon_size: dp(24)
+                pos_hint: {"right": 1, "center_y": 0.5}
+                on_release: root.dismiss()
+
+        MDLabel:
+            text: "Give your phone to the conductor to verify."
+            theme_text_color: "Custom"
+            text_color: 0.4, 0.4, 0.4, 1
+            font_size: dp(16)
+            halign: "center"
+            valign: "center"
+            size_hint_y: None
+            height: dp(28)
+
+        # PIN input
+        MDCard:
+            md_bg_color: 1, 1, 1, 1
+            line_color: 0.8, 0.8, 0.8, 1
+            line_width: 1
+            radius: [dp(8)]
+            elevation: 0
+            size_hint_y: None
+            height: dp(64)
+            padding: dp(16), 0, dp(16), 0
+
+            TextInput:
+                id: pin_input
+                input_filter: "int"
+                halign: "center"
+                hint_text: "Ticket Pin Code"
+                hint_text_color: 0.45, 0.45, 0.45, 1
+                foreground_color: 0.1, 0.1, 0.1, 1
+                background_color: 0, 0, 0, 0
+                cursor_color: 0.13, 0.6, 0.3, 1
+                font_size: dp(22)
+                multiline: False
+                password: True
+                size_hint_y: None
+                height: dp(44)
+                pos_hint: {"center_y": 0.5}
+                padding: [0, dp(9), 0, dp(9)]
+                background_normal: ""
+                background_active: ""
+
+        # Dashed separator
+        Widget:
+            size_hint_y: None
+            height: dp(12)
+            canvas.after:
+                Color:
+                    rgba: 0.75, 0.75, 0.75, 1
+                Line:
+                    points: self.x, self.center_y, self.right, self.center_y
+                    dash_length: dp(6)
+                    dash_offset: dp(4)
+                    width: 1
+
+        MDLabel:
+            text: "Attempts left: " + (str(root.screen.attempts_left) if root.screen else "3")
+            theme_text_color: "Custom"
+            text_color: 0.2, 0.2, 0.2, 1
+            font_size: dp(17)
+            halign: "left"
+            valign: "center"
+            size_hint_y: None
+            height: dp(28)
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(28)
+            spacing: dp(8)
+
+            MDIcon:
+                icon: "alert-outline"
+                theme_icon_color: "Custom"
+                icon_color: 0.85, 0.2, 0.2, 1
+                font_size: dp(20)
+                size_hint_x: None
+                width: dp(26)
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: "Ticket will expire after 3 wrong attempts"
+                theme_text_color: "Custom"
+                text_color: 0.85, 0.2, 0.2, 1
+                bold: True
+                font_size: dp(16)
+                valign: "center"
+
+        # Verify button
+        MDCard:
+            md_bg_color: 0.13, 0.6, 0.3, 1
+            radius: [dp(10)]
+            elevation: 0
+            size_hint_y: None
+            height: dp(56)
+            ripple_behavior: True
+            on_release: root.screen.verify_pin(root) if root.screen else None
+
+            MDLabel:
+                text: "Verify"
+                halign: "center"
+                valign: "center"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                bold: True
+                font_size: dp(20)
+
+        MDLabel:
+            text: "Only conductor should enter this PIN."
+            theme_text_color: "Custom"
+            text_color: 0.45, 0.45, 0.45, 1
+            font_size: dp(15)
+            halign: "center"
+            valign: "center"
+            size_hint_y: None
+            height: dp(26)
+
+
 <ViewTicketScreen>:
     MDBoxLayout:
         orientation: "vertical"
-        md_bg_color: 0.957, 0.961, 0.980, 1
+        md_bg_color: 1, 1, 1, 1
 
-        MDTopAppBar:
-            title: "View Ticket"
-            left_action_items: [["arrow-left", lambda x: root.go_back()]]
-            md_bg_color: 0.17, 0.75, 0.67, 1
-            specific_text_color: 1, 1, 1, 1
-
+        # ── TOP BAR ───────────────────────────────────────────────
         MDBoxLayout:
-            orientation: "vertical"
-            padding: dp(20)
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(52)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(8), 0, dp(16), 0
+            spacing: dp(12)
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.1, 0.1, 0.1, 1
+                icon_size: dp(26)
+                pos_hint: {"center_y": 0.5}
+                on_release: root.go_back()
+
+            Widget:
 
             MDLabel:
-                text: "View Ticket Screen"
-                halign: "center"
-                theme_text_color: "Secondary"
-                font_style: "H6"
+                text: "Need Help?"
+                theme_text_color: "Custom"
+                text_color: 0.2, 0.2, 0.2, 1
+                font_size: dp(16)
+                underline: True
+                halign: "right"
+                valign: "center"
+                size_hint_x: None
+                width: dp(100)
+
+            MDLabel:
+                text: "All tickets"
+                theme_text_color: "Custom"
+                text_color: 0.2, 0.2, 0.2, 1
+                font_size: dp(16)
+                underline: True
+                halign: "right"
+                valign: "center"
+                size_hint_x: None
+                width: dp(90)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.93, 0.93, 0.93, 1
+
+        # ── BODY ──────────────────────────────────────────────────
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(16), dp(16), dp(16), dp(16)
+
+                # ── TICKET CARD ───────────────────────────────────
+                MDCard:
+                    orientation: "vertical"
+                    md_bg_color: 1, 1, 1, 1
+                    radius: [dp(14)]
+                    elevation: 0
+                    line_color: 0.88, 0.88, 0.88, 1
+                    line_width: 1
+                    size_hint_y: None
+                    height: self.minimum_height
+                    padding: 0
+                    spacing: 0
+
+                    # Red header strip (PMPML, Marathi)
+                    MDCard:
+                        md_bg_color: 0.83, 0.18, 0.18, 1
+                        radius: [dp(14), dp(14), 0, 0]
+                        elevation: 0
+                        size_hint_y: None
+                        height: dp(48)
+                        padding: dp(12), 0, dp(12), 0
+
+                        MDLabel:
+                            text: "पुणे महानगर परिवहन महामंडळ लि."
+                            font_name: "Devanagari"
+                            halign: "center"
+                            valign: "center"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            bold: True
+                            font_size: dp(18)
+
+                    # ── ROUTE / COUNT / FARE ──────────────────────
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: dp(20), dp(16), dp(20), dp(16)
+                        spacing: dp(8)
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(22)
+
+                            MDLabel:
+                                text: "Route"
+                                theme_text_color: "Custom"
+                                text_color: 0.45, 0.45, 0.45, 1
+                                font_size: dp(15)
+                                valign: "center"
+
+                            MDLabel:
+                                text: "Tickets count"
+                                theme_text_color: "Custom"
+                                text_color: 0.45, 0.45, 0.45, 1
+                                font_size: dp(15)
+                                halign: "center"
+                                valign: "center"
+
+                            MDLabel:
+                                text: "Fare"
+                                theme_text_color: "Custom"
+                                text_color: 0.45, 0.45, 0.45, 1
+                                font_size: dp(15)
+                                halign: "right"
+                                valign: "center"
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(36)
+
+                            MDLabel:
+                                text: root.route
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(26)
+                                valign: "center"
+
+                            MDLabel:
+                                text: root.tickets_count
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(24)
+                                halign: "center"
+                                valign: "center"
+
+                            MDLabel:
+                                text: root.fare
+                                font_name: "Devanagari"
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(24)
+                                halign: "right"
+                                valign: "center"
+
+                        Widget:
+                            size_hint_y: None
+                            height: dp(12)
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(60)
+                            spacing: dp(10)
+
+                            MDLabel:
+                                text: root.source
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(22)
+                                valign: "center"
+
+                            MDIcon:
+                                icon: "arrow-right"
+                                theme_icon_color: "Custom"
+                                icon_color: 0.1, 0.1, 0.1, 1
+                                font_size: dp(26)
+                                size_hint_x: None
+                                width: dp(40)
+                                halign: "center"
+                                pos_hint: {"center_y": 0.5}
+
+                            MDLabel:
+                                text: root.destination
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(22)
+                                valign: "center"
+
+                    # ── PERFORATION (with notches) ────────────────
+                    Widget:
+                        size_hint_y: None
+                        height: dp(24)
+                        canvas.after:
+                            Color:
+                                rgba: 1, 1, 1, 1
+                            Ellipse:
+                                pos: self.x - dp(12), self.center_y - dp(12)
+                                size: dp(24), dp(24)
+                            Ellipse:
+                                pos: self.right - dp(12), self.center_y - dp(12)
+                                size: dp(24), dp(24)
+                            Color:
+                                rgba: 0.7, 0.7, 0.7, 1
+                            Line:
+                                points: self.x + dp(16), self.center_y, self.right - dp(16), self.center_y
+                                dash_length: dp(6)
+                                dash_offset: dp(4)
+                                width: 1
+
+                    # ── BOOKING / VALIDITY ────────────────────────
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: None
+                        height: self.minimum_height
+                        padding: dp(20), dp(16), dp(20), dp(12)
+                        spacing: dp(6)
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(22)
+
+                            MDLabel:
+                                text: "Booking Time"
+                                theme_text_color: "Custom"
+                                text_color: 0.45, 0.45, 0.45, 1
+                                font_size: dp(15)
+                                valign: "center"
+
+                            MDLabel:
+                                text: "Validity Time"
+                                theme_text_color: "Custom"
+                                text_color: 0.45, 0.45, 0.45, 1
+                                font_size: dp(15)
+                                halign: "left"
+                                valign: "center"
+
+                        MDBoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            height: dp(28)
+
+                            MDLabel:
+                                text: root.booking_time
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(16)
+                                valign: "center"
+
+                            MDLabel:
+                                text: root.validity_time
+                                theme_text_color: "Custom"
+                                text_color: 0.1, 0.1, 0.1, 1
+                                bold: True
+                                font_size: dp(16)
+                                halign: "left"
+                                valign: "center"
+
+                        MDLabel:
+                            text: root.ticket_no
+                            theme_text_color: "Custom"
+                            text_color: 0.2, 0.2, 0.2, 1
+                            font_size: dp(18)
+                            halign: "center"
+                            valign: "center"
+                            size_hint_y: None
+                            height: dp(40)
+
+                    # ── DASHED SEPARATOR ──────────────────────────
+                    Widget:
+                        size_hint_y: None
+                        height: dp(12)
+                        canvas.after:
+                            Color:
+                                rgba: 0.7, 0.7, 0.7, 1
+                            Line:
+                                points: self.x + dp(16), self.center_y, self.right - dp(16), self.center_y
+                                dash_length: dp(6)
+                                dash_offset: dp(4)
+                                width: 1
+
+                    # ── LOGO ──────────────────────────────────────
+                    AnchorLayout:
+                        anchor_x: "center"
+                        anchor_y: "center"
+                        size_hint_y: None
+                        height: dp(160)
+
+                        Image:
+                            source: "assets/logo_icon_lg.png"
+                            mipmap: True
+                            size_hint: None, None
+                            size: dp(150), dp(150)
+                            allow_stretch: True
+                            keep_ratio: True
+
+                    # ── STATUS ────────────────────────────────────
+                    MDLabel:
+                        text: root.status
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.6, 0.3, 1
+                        bold: True
+                        font_size: dp(20)
+                        halign: "center"
+                        valign: "center"
+                        size_hint_y: None
+                        height: dp(50)
+
+        # ── BOTTOM ACTION BAR ─────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(76)
+            md_bg_color: 0.91, 0.97, 0.93, 1
+            padding: dp(16), dp(14), dp(16), dp(14)
+            spacing: dp(14)
+
+            MDCard:
+                md_bg_color: 1, 1, 1, 1
+                line_color: 0.13, 0.6, 0.3, 1
+                line_width: 1.2
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.show_qr()
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    padding: dp(10), 0, dp(10), 0
+
+                    Widget:
+
+                    MDIcon:
+                        icon: "qrcode"
+                        theme_icon_color: "Custom"
+                        icon_color: 0.13, 0.55, 0.3, 1
+                        font_size: dp(24)
+                        size_hint_x: None
+                        width: dp(28)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Show QR code"
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.45, 0.28, 1
+                        bold: True
+                        font_size: dp(17)
+                        valign: "center"
+                        size_hint_x: None
+                        width: dp(130)
+
+                    Widget:
+
+            MDCard:
+                md_bg_color: 1, 1, 1, 1
+                line_color: 0.13, 0.6, 0.3, 1
+                line_width: 1.2
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.verify()
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    padding: dp(10), 0, dp(10), 0
+
+                    Widget:
+
+                    MDIcon:
+                        icon: "pencil"
+                        theme_icon_color: "Custom"
+                        icon_color: 0.13, 0.55, 0.3, 1
+                        font_size: dp(22)
+                        size_hint_x: None
+                        width: dp(26)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Verify"
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.45, 0.28, 1
+                        bold: True
+                        font_size: dp(17)
+                        valign: "center"
+                        size_hint_x: None
+                        width: dp(60)
+
+                    Widget:

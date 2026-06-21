@@ -1,0 +1,230 @@
+#:kivy 2.0
+
+<ClickBox@ButtonBehavior+MDBoxLayout>:
+
+<ProfileRow@ButtonBehavior+MDBoxLayout>:
+    icon_source: ""
+    label_text: ""
+    orientation: "horizontal"
+    size_hint_y: None
+    height: dp(66)
+    padding: dp(20), 0, dp(20), 0
+    spacing: dp(22)
+    md_bg_color: 1, 1, 1, 1
+
+    Image:
+        source: root.icon_source
+        size_hint: None, None
+        size: dp(34), dp(34)
+        pos_hint: {"center_y": 0.5}
+        allow_stretch: True
+        keep_ratio: True
+
+    MDLabel:
+        text: root.label_text
+        theme_text_color: "Custom"
+        text_color: 0.1, 0.1, 0.1, 1
+        font_size: dp(20)
+        valign: "center"
+
+
+<ProfileScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: 1, 1, 1, 1
+
+        # ── TOP BAR ───────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(56)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(12), 0, dp(12), 0
+            spacing: dp(8)
+
+            ClickBox:
+                size_hint_x: None
+                width: dp(40)
+                on_release: root.go_back()
+
+                AnchorLayout:
+                    anchor_x: "center"
+                    anchor_y: "center"
+
+                    Image:
+                        source: "assets/back_arrow_inside_profile.png"
+                        mipmap: True
+                        size_hint: None, None
+                        size: dp(26), dp(26)
+                        allow_stretch: True
+                        keep_ratio: True
+
+            MDLabel:
+                text: "My Profile"
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                bold: True
+                font_size: dp(22)
+                valign: "center"
+
+            AnchorLayout:
+                anchor_x: "center"
+                anchor_y: "center"
+                size_hint_x: None
+                width: dp(40)
+
+                Image:
+                    source: "assets/menu_dots_inside_profile.png"
+                    mipmap: True
+                    size_hint: None, None
+                    size: dp(24), dp(24)
+                    allow_stretch: True
+                    keep_ratio: True
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(2)
+            md_bg_color: 0.92, 0.92, 0.92, 1
+
+        # ── PROFILE HEADER ────────────────────────────────────────
+        ClickBox:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(96)
+            padding: dp(20), dp(16), dp(20), dp(16)
+            spacing: dp(20)
+            md_bg_color: 1, 1, 1, 1
+
+            Image:
+                source: "assets/profile_avatar_inside_profile.png"
+                mipmap: True
+                size_hint: None, None
+                size: dp(60), dp(60)
+                pos_hint: {"center_y": 0.5}
+                allow_stretch: True
+                keep_ratio: True
+
+            MDLabel:
+                text: "Click here to update your profile"
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                bold: True
+                font_size: dp(21)
+                valign: "center"
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.92, 0.92, 0.92, 1
+
+        # ── MENU LIST ─────────────────────────────────────────────
+        ProfileRow:
+            icon_source: "assets/my_tickets_inside_profile.png"
+            label_text: "My Tickets"
+            on_release: root.open_item("tickets")
+
+        ProfileRow:
+            icon_source: "assets/my_passes_inside_profile.png"
+            label_text: "My Passes"
+            on_release: root.open_item("passes")
+
+        ProfileRow:
+            icon_source: "assets/complaints_inside_profile.png"
+            label_text: "Complaints"
+            on_release: root.open_item("complaints")
+
+        ProfileRow:
+            icon_source: "assets/share_app_inside_profile.png"
+            label_text: "Share app"
+            on_release: root.open_item("share")
+
+        ProfileRow:
+            icon_source: "assets/rate_us_inside_profile.png"
+            label_text: "Rate Us"
+            on_release: root.open_item("rate")
+
+        # Validate Pass / Ticket (no asset provided -> MDIcon)
+        ClickBox:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(66)
+            padding: dp(20), 0, dp(20), 0
+            spacing: dp(22)
+            md_bg_color: 1, 1, 1, 1
+            on_release: root.open_item("validate")
+
+            MDIcon:
+                icon: "qrcode-scan"
+                theme_icon_color: "Custom"
+                icon_color: 0.12, 0.12, 0.12, 1
+                font_size: dp(30)
+                size_hint_x: None
+                width: dp(34)
+                halign: "center"
+                pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                text: "Validate Pass / Ticket"
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                font_size: dp(20)
+                valign: "center"
+
+        Widget:
+
+        # ── FOOTER ────────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(48)
+            padding: dp(20), 0, dp(20), 0
+            spacing: dp(16)
+
+            MDLabel:
+                text: "Follow us on :"
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                bold: True
+                font_size: dp(18)
+                size_hint_x: None
+                width: dp(150)
+                valign: "center"
+
+            Image:
+                source: "assets/youtube_inside_profile.png"
+                mipmap: True
+                size_hint: None, None
+                size: dp(30), dp(30)
+                pos_hint: {"center_y": 0.5}
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                source: "assets/instagram_inside_profile.png"
+                mipmap: True
+                size_hint: None, None
+                size: dp(28), dp(28)
+                pos_hint: {"center_y": 0.5}
+                allow_stretch: True
+                keep_ratio: True
+
+            Image:
+                source: "assets/x_twitter_inside_profile.png"
+                mipmap: True
+                size_hint: None, None
+                size: dp(26), dp(26)
+                pos_hint: {"center_y": 0.5}
+                allow_stretch: True
+                keep_ratio: True
+
+            Widget:
+
+        MDLabel:
+            text: root.app_version
+            theme_text_color: "Custom"
+            text_color: 0.5, 0.5, 0.5, 1
+            font_size: dp(16)
+            size_hint_y: None
+            height: dp(40)
+            padding_x: dp(20)
+            valign: "center"

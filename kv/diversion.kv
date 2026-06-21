@@ -1,0 +1,256 @@
+#:kivy 2.0
+
+<RouteCard@MDCard>:
+    badge_text: ""
+    source_text: ""
+    dest_text: ""
+    show_arrow: False
+    tag_text: "Water Logging"
+    orientation: "vertical"
+    md_bg_color: 1, 1, 1, 1
+    radius: [dp(14)]
+    elevation: 2
+    shadow_softness: 8
+    shadow_offset: 0, -1
+    size_hint_y: None
+    height: dp(132)
+    padding: dp(16), dp(14), dp(16), dp(14)
+    spacing: dp(12)
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: dp(48)
+        spacing: dp(12)
+
+        MDCard:
+            md_bg_color: 0.13, 0.6, 0.3, 1
+            radius: [dp(8)]
+            elevation: 0
+            padding: dp(14), 0, dp(14), 0
+            size_hint: None, None
+            width: badge_lbl.texture_size[0] + dp(28)
+            height: dp(46)
+            pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                id: badge_lbl
+                text: root.badge_text
+                font_name: "Devanagari"
+                bold: True
+                halign: "center"
+                valign: "center"
+                adaptive_size: True
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_size: dp(20)
+
+        MDLabel:
+            text: root.source_text
+            font_name: "Devanagari"
+            bold: True
+            theme_text_color: "Custom"
+            text_color: 0.1, 0.1, 0.1, 1
+            font_size: dp(20)
+            valign: "center"
+            halign: "left"
+            shorten: False if root.show_arrow else True
+            shorten_from: "right"
+            max_lines: 1
+            size_hint_x: None if root.show_arrow else 1
+            width: self.texture_size[0] if root.show_arrow else self.width
+
+        Image:
+            source: "assets/horizontal_arrow_inside-bell.png"
+            mipmap: True
+            size_hint: None, None
+            size: (dp(24), dp(24)) if root.show_arrow else (0, 0)
+            opacity: 1 if root.show_arrow else 0
+            pos_hint: {"center_y": 0.5}
+            allow_stretch: True
+            keep_ratio: True
+
+        MDLabel:
+            text: root.dest_text
+            font_name: "Devanagari"
+            bold: True
+            theme_text_color: "Custom"
+            text_color: 0.1, 0.1, 0.1, 1
+            font_size: dp(20)
+            valign: "center"
+            halign: "left"
+            shorten: True
+            shorten_from: "right"
+            max_lines: 1
+            size_hint_x: 1 if root.show_arrow else None
+            width: 0 if not root.show_arrow else self.width
+
+        MDIcon:
+            icon: "chevron-down"
+            theme_icon_color: "Custom"
+            icon_color: 0.2, 0.2, 0.2, 1
+            font_size: dp(28)
+            size_hint_x: None
+            width: dp(30)
+            halign: "center"
+            pos_hint: {"center_y": 0.5}
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: dp(34)
+
+        MDCard:
+            md_bg_color: 0.78, 0.92, 0.95, 1
+            radius: [dp(6)]
+            elevation: 0
+            padding: dp(12), 0, dp(12), 0
+            size_hint: None, None
+            width: tag_lbl.texture_size[0] + dp(24)
+            height: dp(34)
+            pos_hint: {"center_y": 0.5}
+
+            MDLabel:
+                id: tag_lbl
+                text: root.tag_text
+                adaptive_size: True
+                halign: "center"
+                valign: "center"
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                theme_text_color: "Custom"
+                text_color: 0.1, 0.1, 0.1, 1
+                font_size: dp(16)
+
+        Widget:
+
+
+<DiversionScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+        md_bg_color: 0.95, 0.95, 0.95, 1
+
+        # ── TOP BAR ───────────────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(56)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(12), 0, dp(12), 0
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 0.1, 0.1, 0.1, 1
+                icon_size: dp(26)
+                pos_hint: {"center_y": 0.5}
+                on_release: root.go_back()
+
+            Widget:
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.9, 0.9, 0.9, 1
+
+        # ── HEADER (title + search + count) ───────────────────────
+        MDBoxLayout:
+            orientation: "vertical"
+            md_bg_color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(170)
+            padding: dp(16), dp(12), dp(16), dp(12)
+            spacing: dp(14)
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: dp(50)
+                spacing: dp(14)
+
+                Image:
+                    source: "assets/logo_icon.png"
+                    mipmap: True
+                    size_hint: None, None
+                    size: dp(44), dp(44)
+                    pos_hint: {"center_y": 0.5}
+                    allow_stretch: True
+                    keep_ratio: True
+
+                MDLabel:
+                    text: "PMPML Diversion Portal"
+                    theme_text_color: "Custom"
+                    text_color: 0.08, 0.08, 0.08, 1
+                    bold: True
+                    font_size: dp(24)
+                    valign: "center"
+
+            MDBoxLayout:
+                orientation: "horizontal"
+                size_hint_y: None
+                height: dp(54)
+                spacing: dp(12)
+
+                MDCard:
+                    md_bg_color: 0.91, 0.91, 0.91, 1
+                    radius: [dp(28)]
+                    elevation: 0
+                    padding: dp(20), 0, dp(20), 0
+
+                    TextInput:
+                        id: route_input
+                        hint_text: "Enter Route"
+                        hint_text_color: 0.4, 0.4, 0.4, 1
+                        foreground_color: 0.1, 0.1, 0.1, 1
+                        background_color: 0, 0, 0, 0
+                        cursor_color: 0.13, 0.6, 0.3, 1
+                        font_size: dp(20)
+                        multiline: False
+                        size_hint_y: None
+                        height: dp(48)
+                        pos_hint: {"center_y": 0.5}
+                        padding: [0, dp(11), 0, dp(11)]
+                        background_normal: ""
+                        background_active: ""
+
+                MDCard:
+                    md_bg_color: 0, 0, 0, 0
+                    elevation: 0
+                    size_hint: None, None
+                    size: dp(54), dp(54)
+                    pos_hint: {"center_y": 0.5}
+                    ripple_behavior: True
+                    on_release: root.search()
+
+                    AnchorLayout:
+                        anchor_x: "center"
+                        anchor_y: "center"
+
+                        Image:
+                            source: "assets/green_search_icon_inside-bell.png"
+                            mipmap: True
+                            size_hint: None, None
+                            size: dp(54), dp(54)
+                            allow_stretch: True
+                            keep_ratio: True
+
+            MDLabel:
+                text: root.count_text
+                theme_text_color: "Custom"
+                text_color: 0.3, 0.3, 0.3, 1
+                font_size: dp(18)
+                size_hint_y: None
+                height: dp(24)
+                valign: "center"
+
+        # ── ROUTE LIST ────────────────────────────────────────────
+        ScrollView:
+            do_scroll_x: False
+            bar_width: dp(2)
+
+            MDBoxLayout:
+                id: routes_box
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(16), dp(16), dp(16), dp(16)
+                spacing: dp(16)
