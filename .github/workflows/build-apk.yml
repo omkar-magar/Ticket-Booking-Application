@@ -54,7 +54,10 @@ jobs:
 
       - name: Pre-install Android SDK with build-tools 33.0.2 (provides aidl)
         run: |
-          set -euxo pipefail
+          # No 'pipefail': `yes | sdkmanager` makes `yes` die with SIGPIPE
+          # (non-zero) once sdkmanager closes the pipe, which would otherwise
+          # abort the whole step even though sdkmanager succeeded.
+          set -eux
           # Android build-tools >= 34 removed the `aidl` binary. Buildozer always
           # uses the HIGHEST installed build-tools version (no config to pin it),
           # so we install ONLY 33.0.2 (last version that ships aidl) into the SDK
