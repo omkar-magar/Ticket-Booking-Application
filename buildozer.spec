@@ -62,6 +62,13 @@ android.archs = arm64-v8a, armeabi-v7a
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
 
+# (bool) Skip Buildozer's automatic SDK package install/update. The CI workflow
+# pre-installs platform-tools, platforms;android-34 and build-tools 33.0.2 (the
+# last build-tools that still ships `aidl`, which 34+ removed). Skipping the
+# update stops Buildozer from installing the latest build-tools and re-breaking
+# the aidl check.
+android.skip_update = True
+
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))

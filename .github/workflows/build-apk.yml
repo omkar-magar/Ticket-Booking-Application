@@ -80,6 +80,9 @@ jobs:
           ls "$ANDROID_SDK_ROOT/build-tools"
           find "$ANDROID_SDK_ROOT/build-tools" -maxdepth 1 -mindepth 1 -type d \
             ! -name '33.0.2' -exec rm -rf {} +
+          # Buildozer looks for sdkmanager at the legacy $SDK/tools/bin path.
+          # Symlink it to cmdline-tools/latest so that path resolves if used.
+          ln -sfn "$ANDROID_SDK_ROOT/cmdline-tools/latest" "$ANDROID_SDK_ROOT/tools"
           # Fail loudly if aidl is still missing.
           test -x "$ANDROID_SDK_ROOT/build-tools/33.0.2/aidl"
           echo "$ANDROID_SDK_ROOT/build-tools/33.0.2" >> "$GITHUB_PATH"
