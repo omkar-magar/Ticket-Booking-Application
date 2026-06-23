@@ -81,7 +81,7 @@
 
                     # Green header strip
                     MDCard:
-                        md_bg_color: 0.13, 0.6, 0.3, 1
+                        md_bg_color: 0.137, 0.588, 0.333, 1
                         radius: [dp(14), dp(14), 0, 0]
                         elevation: 0
                         size_hint_y: None
@@ -105,7 +105,7 @@
                         spacing: dp(14)
 
                         MDCard:
-                            md_bg_color: 0.13, 0.6, 0.3, 1
+                            md_bg_color: 0.137, 0.588, 0.333, 1
                             radius: [dp(24)]
                             elevation: 0
                             size_hint: None, None
@@ -118,10 +118,11 @@
 
                                 MDIcon:
                                     icon: "bus"
-                                    theme_icon_color: "Custom"
-                                    icon_color: 1, 1, 1, 1
+                                    theme_text_color: "Custom"
+                                    text_color: 1, 1, 1, 1
                                     font_size: dp(24)
                                     halign: "center"
+                                    valign: "center"
                                     size_hint: None, None
                                     size: dp(26), dp(26)
 
@@ -138,7 +139,7 @@
                                 hint_text_color: 0.45, 0.45, 0.45, 1
                                 foreground_color: 0.1, 0.1, 0.1, 1
                                 background_color: 0, 0, 0, 0
-                                cursor_color: 0.13, 0.6, 0.3, 1
+                                cursor_color: 0.137, 0.588, 0.333, 1
                                 font_size: dp(18)
                                 multiline: False
                                 size_hint_y: None
@@ -170,8 +171,8 @@
 
                             MDIcon:
                                 icon: "circle-outline"
-                                theme_icon_color: "Custom"
-                                icon_color: 0.3, 0.3, 0.3, 1
+                                theme_text_color: "Custom"
+                                text_color: 0.3, 0.3, 0.3, 1
                                 font_size: dp(20)
                                 size_hint_x: None
                                 width: dp(22)
@@ -213,8 +214,8 @@
 
                             MDIcon:
                                 icon: "circle-outline"
-                                theme_icon_color: "Custom"
-                                icon_color: 0.15, 0.15, 0.15, 1
+                                theme_text_color: "Custom"
+                                text_color: 0.15, 0.15, 0.15, 1
                                 font_size: dp(22)
                                 size_hint_x: None
                                 width: dp(22)
@@ -258,8 +259,8 @@
                         spacing: dp(12)
 
                         MDCard:
-                            md_bg_color: (0.13, 0.6, 0.3, 1) if root.mode == "fare" else (1, 1, 1, 1)
-                            line_color: (0.13, 0.6, 0.3, 1) if root.mode == "fare" else (0.8, 0.8, 0.8, 1)
+                            md_bg_color: (0.137, 0.588, 0.333, 1) if root.mode == "fare" else (1, 1, 1, 1)
+                            line_color: (0.137, 0.588, 0.333, 1) if root.mode == "fare" else (0.8, 0.8, 0.8, 1)
                             line_width: 1
                             radius: [dp(8)]
                             elevation: 0
@@ -276,8 +277,8 @@
                                 font_size: dp(17)
 
                         MDCard:
-                            md_bg_color: (0.13, 0.6, 0.3, 1) if root.mode == "ending" else (1, 1, 1, 1)
-                            line_color: (0.13, 0.6, 0.3, 1) if root.mode == "ending" else (0.8, 0.8, 0.8, 1)
+                            md_bg_color: (0.137, 0.588, 0.333, 1) if root.mode == "ending" else (1, 1, 1, 1)
+                            line_color: (0.137, 0.588, 0.333, 1) if root.mode == "ending" else (0.8, 0.8, 0.8, 1)
                             line_width: 1
                             radius: [dp(8)]
                             elevation: 0
@@ -453,8 +454,8 @@
 
                     MDIcon:
                         icon: "menu-up"
-                        theme_icon_color: "Custom"
-                        icon_color: 0.4, 0.4, 0.4, 1
+                        theme_text_color: "Custom"
+                        text_color: 0.4, 0.4, 0.4, 1
                         font_size: dp(18)
                         size_hint_x: None
                         width: dp(20)
@@ -496,7 +497,7 @@
                         valign: "center"
 
             MDCard:
-                md_bg_color: 0.13, 0.6, 0.3, 1
+                md_bg_color: 0.137, 0.588, 0.333, 1
                 radius: [dp(10)]
                 elevation: 0
                 ripple_behavior: True

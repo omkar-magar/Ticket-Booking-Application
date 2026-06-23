@@ -1,5 +1,6 @@
 from kivymd.uix.screen import MDScreen
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.properties import StringProperty
 
@@ -38,8 +39,18 @@ ROUTES = [
 
 class DiversionScreen(MDScreen):
     count_text = StringProperty("")
+    _loaded = False
 
-    def on_pre_enter(self, *args):
+    def on_enter(self, *args):
+        # Build the 28 route cards only once, and defer it one frame so the
+        # slide-in transition starts immediately instead of stalling while the
+        # cards are constructed. Re-opening the screen is then instant.
+        if not self._loaded:
+            self.count_text = f"{len(ROUTES)} routes total"
+            Clock.schedule_once(self._initial_render, 0)
+            self._loaded = True
+
+    def _initial_render(self, *args):
         self._render(ROUTES)
 
     def _render(self, routes):

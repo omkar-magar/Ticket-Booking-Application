@@ -84,32 +84,32 @@
             MDBoxLayout:
                 orientation: "vertical"
                 adaptive_height: True
-                padding: dp(16), dp(16), dp(16), dp(20)
-                spacing: dp(16)
+                padding: dp(14), dp(12), dp(14), dp(16)
+                spacing: dp(12)
 
                 # ── SEARCH BAR ────────────────────────────────────
                 MDCard:
                     md_bg_color: 1, 1, 1, 1
-                    radius: [dp(16)]
+                    radius: [dp(12)]
                     elevation: 0
                     size_hint_y: None
-                    height: dp(74)
-                    padding: dp(10), dp(10), dp(10), dp(10)
+                    height: dp(50)
+                    padding: dp(6), dp(6), dp(6), dp(6)
 
                     MDCard:
-                        md_bg_color: 0.86, 0.86, 0.86, 1
-                        radius: [dp(28)]
+                        md_bg_color: 0.93, 0.93, 0.93, 1
+                        radius: [dp(22)]
                         elevation: 0
-                        padding: dp(16), 0, dp(16), 0
+                        padding: dp(14), 0, dp(14), 0
 
                         MDBoxLayout:
                             orientation: "horizontal"
-                            spacing: dp(12)
+                            spacing: dp(10)
 
                             Image:
                                 source: "assets/search_icon_hd_transparent.png"
                                 size_hint: None, None
-                                size: dp(24), dp(24)
+                                size: dp(20), dp(20)
                                 pos_hint: {"center_y": 0.5}
                                 mipmap: True
                                 allow_stretch: True
@@ -118,16 +118,16 @@
                             TextInput:
                                 hint_text: "कुठे जायचे आहे?"
                                 font_name: "Devanagari"
-                                hint_text_color: 0.25, 0.25, 0.25, 1
+                                hint_text_color: 0.35, 0.35, 0.35, 1
                                 foreground_color: 0.1, 0.1, 0.1, 1
                                 background_color: 0, 0, 0, 0
                                 cursor_color: 0.1, 0.1, 0.1, 1
-                                font_size: dp(16)
+                                font_size: dp(15)
                                 multiline: False
                                 size_hint_y: None
-                                height: dp(44)
+                                height: dp(36)
                                 pos_hint: {"center_y": 0.5}
-                                padding: [0, dp(12), 0, dp(12)]
+                                padding: [0, dp(8), 0, dp(8)]
                                 border: (0, 0, 0, 0)
                                 background_normal: ""
                                 background_active: ""
@@ -135,22 +135,25 @@
                 # ── LARGE CARDS ───────────────────────────────────
                 MDGridLayout:
                     cols: 2
-                    spacing: dp(14)
+                    spacing: dp(12)
                     adaptive_height: True
-                    padding: 0, dp(4), 0, 0
+                    padding: 0, dp(2), 0, 0
 
                     # Bus Ticket
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(8)
+                        spacing: dp(6)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(16)]
-                            elevation: 0
+                            radius: [dp(14)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(90)
+                            height: dp(72)
                             ripple_behavior: True
                             on_release: root.navigate_to("bus_ticket")
 
@@ -163,31 +166,33 @@
                                     mipmap: True
                                     allow_stretch: True
                                     size_hint: None, None
-                                    size: dp(50), dp(50)
+                                    size: dp(40), dp(40)
 
                         MDLabel:
                             text: "Bus Ticket"
                             halign: "center"
                             valign: "middle"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(15)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(14)
                             size_hint_y: None
-                            height: dp(24)
+                            height: dp(22)
 
                     # Daily Pass
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(8)
+                        spacing: dp(6)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(16)]
-                            elevation: 0
+                            radius: [dp(14)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(90)
+                            height: dp(72)
                             ripple_behavior: True
                             on_release: root.navigate_to("daily_pass")
 
@@ -200,37 +205,39 @@
                                     mipmap: True
                                     allow_stretch: True
                                     size_hint: None, None
-                                    size: dp(50), dp(50)
+                                    size: dp(40), dp(40)
 
                         MDLabel:
                             text: "Daily Pass"
                             halign: "center"
                             valign: "middle"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(15)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(14)
                             size_hint_y: None
-                            height: dp(24)
+                            height: dp(22)
 
                 # ── SMALL CARDS ───────────────────────────────────
                 MDGridLayout:
                     cols: 4
-                    spacing: dp(10)
+                    spacing: dp(8)
                     adaptive_height: True
 
                     # View Ticket
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(6)
+                        spacing: dp(4)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(14)]
-                            elevation: 0
+                            radius: [dp(12)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(76)
+                            height: dp(62)
                             ripple_behavior: True
                             on_release: root.navigate_to("view_ticket")
 
@@ -243,32 +250,34 @@
                                     mipmap: True
                                     allow_stretch: True
                                     size_hint: None, None
-                                    size: dp(34), dp(34)
+                                    size: dp(30), dp(30)
 
                         MDLabel:
                             text: "View\nTicket"
                             halign: "center"
                             valign: "top"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(13)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(12)
                             line_height: 1.15
                             size_hint_y: None
-                            height: dp(34)
+                            height: dp(30)
 
                     # View Pass
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(6)
+                        spacing: dp(4)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(14)]
-                            elevation: 0
+                            radius: [dp(12)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(76)
+                            height: dp(62)
                             ripple_behavior: True
                             on_release: root.navigate_to("view_pass")
 
@@ -281,32 +290,34 @@
                                     mipmap: True
                                     allow_stretch: True
                                     size_hint: None, None
-                                    size: dp(34), dp(34)
+                                    size: dp(30), dp(30)
 
                         MDLabel:
                             text: "View\nPass"
                             halign: "center"
                             valign: "top"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(13)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(12)
                             line_height: 1.15
                             size_hint_y: None
-                            height: dp(34)
+                            height: dp(30)
 
                     # Route Timetable
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(6)
+                        spacing: dp(4)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(14)]
-                            elevation: 0
+                            radius: [dp(12)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(76)
+                            height: dp(62)
                             ripple_behavior: True
 
                             AnchorLayout:
@@ -318,32 +329,34 @@
                                     mipmap: True
                                     allow_stretch: True
                                     size_hint: None, None
-                                    size: dp(34), dp(34)
+                                    size: dp(30), dp(30)
 
                         MDLabel:
                             text: "Route Ti\nmetable"
                             halign: "center"
                             valign: "top"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(13)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(12)
                             line_height: 1.15
                             size_hint_y: None
-                            height: dp(34)
+                            height: dp(30)
 
                     # Metro Ticket
                     MDBoxLayout:
                         orientation: "vertical"
                         adaptive_height: True
-                        spacing: dp(6)
+                        spacing: dp(4)
 
                         MDCard:
                             md_bg_color: 0.878, 0.937, 0.969, 1
-                            radius: [dp(14)]
-                            elevation: 0
+                            radius: [dp(12)]
+                            elevation: 2
+                            shadow_softness: 6
+                            shadow_offset: 0, -2
+                            shadow_color: 0, 0, 0, 0.18
                             size_hint_y: None
-                            height: dp(76)
+                            height: dp(62)
                             ripple_behavior: True
 
                             AnchorLayout:
@@ -354,7 +367,7 @@
                                     source: "assets/metro_icon.png"
                                     mipmap: True
                                     size_hint: None, None
-                                    size: dp(60), dp(60)
+                                    size: dp(48), dp(48)
                                     allow_stretch: True
                                     keep_ratio: True
 
@@ -363,19 +376,18 @@
                             halign: "center"
                             valign: "top"
                             theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            bold: True
-                            font_size: dp(13)
+                            text_color: 0.15, 0.15, 0.15, 1
+                            font_size: dp(12)
                             line_height: 1.15
                             size_hint_y: None
-                            height: dp(34)
+                            height: dp(30)
 
                 # ── NEAR ME SECTION ───────────────────────────────
                 MDBoxLayout:
                     orientation: "horizontal"
                     size_hint_y: None
-                    height: dp(30)
-                    padding: 0, dp(4), 0, 0
+                    height: dp(28)
+                    padding: 0, dp(2), 0, 0
 
                     MDLabel:
                         text: "Near Me"
@@ -383,17 +395,17 @@
                         theme_text_color: "Custom"
                         text_color: 0.08, 0.08, 0.08, 1
                         bold: True
-                        font_size: dp(20)
+                        font_size: dp(18)
 
                     MDLabel:
                         text: "Show all"
                         halign: "right"
                         theme_text_color: "Custom"
                         text_color: 0.08, 0.08, 0.08, 1
-                        font_size: dp(14)
+                        font_size: dp(13)
                         underline: True
                         size_hint_x: None
-                        width: dp(70)
+                        width: dp(65)
                         pos_hint: {"center_y": 0.5}
 
                 # Near Me Card
@@ -461,112 +473,85 @@
         MDBoxLayout:
             orientation: "horizontal"
             size_hint_y: None
-            height: dp(60)
+            height: dp(68)
             md_bg_color: 1, 1, 1, 1
-            padding: dp(0), dp(4), dp(0), dp(4)
+            padding: dp(0), dp(8), dp(0), dp(8)
 
             MDBoxLayout:
                 orientation: "vertical"
                 size_hint_x: 1
+                spacing: dp(3)
 
                 AnchorLayout:
                     anchor_x: "center"
                     anchor_y: "center"
 
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        adaptive_height: True
-                        adaptive_width: True
-                        spacing: dp(2)
+                    Image:
+                        source: "assets/home_icon.png"
+                        mipmap: True
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: None, None
+                        size: dp(24), dp(24)
 
-                        AnchorLayout:
-                            anchor_x: "center"
-                            size_hint_y: None
-                            height: dp(26)
-
-                            Image:
-                                source: "assets/home_icon.png"
-                                mipmap: True
-                                allow_stretch: True
-                                size_hint: None, None
-                                size: dp(24), dp(24)
-
-                        MDLabel:
-                            text: "Home"
-                            halign: "center"
-                            theme_text_color: "Custom"
-                            text_color: 0.1, 0.1, 0.1, 1
-                            font_size: dp(11)
-                            bold: True
-                            size_hint_y: None
-                            height: dp(16)
+                MDLabel:
+                    text: "Home"
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 0.1, 0.1, 0.1, 1
+                    font_size: dp(11)
+                    bold: True
+                    size_hint_y: None
+                    height: dp(15)
 
             MDBoxLayout:
                 orientation: "vertical"
                 size_hint_x: 1
+                spacing: dp(3)
 
                 AnchorLayout:
                     anchor_x: "center"
                     anchor_y: "center"
 
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        adaptive_height: True
-                        adaptive_width: True
-                        spacing: dp(2)
+                    Image:
+                        source: "assets/buses_icon.png"
+                        mipmap: True
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: None, None
+                        size: dp(24), dp(24)
 
-                        AnchorLayout:
-                            anchor_x: "center"
-                            size_hint_y: None
-                            height: dp(26)
-
-                            Image:
-                                source: "assets/buses_icon.png"
-                                mipmap: True
-                                allow_stretch: True
-                                size_hint: None, None
-                                size: dp(24), dp(24)
-
-                        MDLabel:
-                            text: "Buses"
-                            halign: "center"
-                            theme_text_color: "Custom"
-                            text_color: 0.5, 0.5, 0.5, 1
-                            font_size: dp(11)
-                            size_hint_y: None
-                            height: dp(16)
+                MDLabel:
+                    text: "Buses"
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 0.5, 0.5, 0.5, 1
+                    font_size: dp(11)
+                    size_hint_y: None
+                    height: dp(15)
 
             MDBoxLayout:
                 orientation: "vertical"
                 size_hint_x: 1
+                spacing: dp(3)
 
                 AnchorLayout:
                     anchor_x: "center"
                     anchor_y: "center"
 
-                    MDBoxLayout:
-                        orientation: "vertical"
-                        adaptive_height: True
-                        adaptive_width: True
-                        spacing: dp(2)
+                    Image:
+                        source: "assets/help_icon.png"
+                        mipmap: True
+                        allow_stretch: True
+                        keep_ratio: True
+                        size_hint: None, None
+                        size: dp(24), dp(24)
 
-                        AnchorLayout:
-                            anchor_x: "center"
-                            size_hint_y: None
-                            height: dp(26)
-
-                            Image:
-                                source: "assets/help_icon.png"
-                                mipmap: True
-                                allow_stretch: True
-                                size_hint: None, None
-                                size: dp(24), dp(24)
-
-                        MDLabel:
-                            text: "Help"
-                            halign: "center"
-                            theme_text_color: "Custom"
-                            text_color: 0.5, 0.5, 0.5, 1
-                            font_size: dp(11)
-                            size_hint_y: None
-                            height: dp(16)
+                MDLabel:
+                    text: "Help"
+                    halign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 0.5, 0.5, 0.5, 1
+                    font_size: dp(11)
+                    size_hint_y: None
+                    height: dp(15)

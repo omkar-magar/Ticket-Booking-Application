@@ -7,15 +7,15 @@
     label_text: ""
     orientation: "horizontal"
     size_hint_y: None
-    height: dp(66)
-    padding: dp(20), 0, dp(20), 0
-    spacing: dp(22)
+    height: dp(50)
+    padding: dp(16), 0, dp(16), 0
+    spacing: dp(16)
     md_bg_color: 1, 1, 1, 1
 
     Image:
         source: root.icon_source
         size_hint: None, None
-        size: dp(34), dp(34)
+        size: dp(26), dp(26)
         pos_hint: {"center_y": 0.5}
         allow_stretch: True
         keep_ratio: True
@@ -24,7 +24,7 @@
         text: root.label_text
         theme_text_color: "Custom"
         text_color: 0.1, 0.1, 0.1, 1
-        font_size: dp(20)
+        font_size: dp(17)
         valign: "center"
 
 
@@ -51,13 +51,15 @@
                     anchor_x: "center"
                     anchor_y: "center"
 
-                    Image:
-                        source: "assets/back_arrow_inside_profile.png"
-                        mipmap: True
+                    MDIcon:
+                        icon: "arrow-left"
+                        theme_text_color: "Custom"
+                        text_color: 0.1, 0.1, 0.1, 1
+                        font_size: dp(26)
+                        halign: "center"
+                        valign: "center"
                         size_hint: None, None
                         size: dp(26), dp(26)
-                        allow_stretch: True
-                        keep_ratio: True
 
             MDLabel:
                 text: "My Profile"
@@ -90,26 +92,28 @@
         ClickBox:
             orientation: "horizontal"
             size_hint_y: None
-            height: dp(96)
-            padding: dp(20), dp(16), dp(20), dp(16)
-            spacing: dp(20)
+            height: dp(76)
+            padding: dp(16), dp(12), dp(16), dp(12)
+            spacing: dp(16)
             md_bg_color: 1, 1, 1, 1
 
-            Image:
-                source: "assets/profile_avatar_inside_profile.png"
-                mipmap: True
+            MDIcon:
+                icon: "account"
+                theme_text_color: "Custom"
+                text_color: 0.12, 0.12, 0.12, 1
+                font_size: dp(44)
                 size_hint: None, None
-                size: dp(60), dp(60)
+                size: dp(48), dp(48)
+                halign: "center"
+                valign: "center"
                 pos_hint: {"center_y": 0.5}
-                allow_stretch: True
-                keep_ratio: True
 
             MDLabel:
                 text: "Click here to update your profile"
                 theme_text_color: "Custom"
                 text_color: 0.1, 0.1, 0.1, 1
                 bold: True
-                font_size: dp(21)
+                font_size: dp(18)
                 valign: "center"
 
         MDBoxLayout:
@@ -147,19 +151,19 @@
         ClickBox:
             orientation: "horizontal"
             size_hint_y: None
-            height: dp(66)
-            padding: dp(20), 0, dp(20), 0
-            spacing: dp(22)
+            height: dp(50)
+            padding: dp(16), 0, dp(16), 0
+            spacing: dp(16)
             md_bg_color: 1, 1, 1, 1
             on_release: root.open_item("validate")
 
             MDIcon:
                 icon: "qrcode-scan"
-                theme_icon_color: "Custom"
-                icon_color: 0.12, 0.12, 0.12, 1
-                font_size: dp(30)
+                theme_text_color: "Custom"
+                text_color: 0.12, 0.12, 0.12, 1
+                font_size: dp(24)
                 size_hint_x: None
-                width: dp(34)
+                width: dp(26)
                 halign: "center"
                 pos_hint: {"center_y": 0.5}
 
@@ -167,7 +171,7 @@
                 text: "Validate Pass / Ticket"
                 theme_text_color: "Custom"
                 text_color: 0.1, 0.1, 0.1, 1
-                font_size: dp(20)
+                font_size: dp(17)
                 valign: "center"
 
         Widget:
