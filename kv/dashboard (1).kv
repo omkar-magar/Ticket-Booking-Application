@@ -3,7 +3,8 @@
 <DashboardScreen>:
     MDBoxLayout:
         orientation: "vertical"
-        md_bg_color: 0.965, 0.953, 0.937, 1
+        # Warm peach off-white to match the original app's background tone.
+        md_bg_color: 0.980, 0.950, 0.920, 1
 
         # ── TOP BAR ──────────────────────────────────────────────
         MDBoxLayout:
@@ -17,7 +18,7 @@
                 source: "assets/logo_icon.png"
                 mipmap: True
                 size_hint: None, None
-                size: dp(52), dp(52)
+                size: dp(44), dp(44)
                 pos_hint: {"center_y": 0.5}
                 allow_stretch: True
                 keep_ratio: True
@@ -149,7 +150,7 @@
                             radius: [dp(16)]
                             elevation: 0
                             size_hint_y: None
-                            height: dp(120)
+                            height: dp(90)
                             ripple_behavior: True
                             on_release: root.navigate_to("bus_ticket")
 
@@ -186,7 +187,7 @@
                             radius: [dp(16)]
                             elevation: 0
                             size_hint_y: None
-                            height: dp(120)
+                            height: dp(90)
                             ripple_behavior: True
                             on_release: root.navigate_to("daily_pass")
 
