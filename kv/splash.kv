@@ -1,10 +1,12 @@
 #:kivy 2.0
 
 <SplashScreen>:
-    md_bg_color: 1, 1, 1, 1
+    # Warm off-white to match the background baked into presplash.png (and the
+    # app theme), so the logo blends seamlessly instead of a cream square on white.
+    md_bg_color: 0.953, 0.949, 0.941, 1
 
     MDFloatLayout:
-        md_bg_color: 1, 1, 1, 1
+        md_bg_color: 0.953, 0.949, 0.941, 1
 
         # PMPML brand logo, centered — same asset as the native presplash so the
         # hand-off from the Android splash to this screen looks seamless.
