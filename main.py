@@ -23,6 +23,7 @@ _FONT_PATH = os.path.join(BASE_DIR, "assets", "fonts", "NotoSansDevanagari-Regul
 if os.path.exists(_FONT_PATH):
     LabelBase.register(name="Devanagari", fn_regular=_FONT_PATH)
 
+from screens.splash import SplashScreen
 from screens.dashboard import DashboardScreen
 from screens.bus_ticket import BusTicketScreen
 from screens.daily_pass import DailyPassScreen
@@ -45,6 +46,7 @@ class AMGApp(MDApp):
                     Builder.load_file(os.path.join(kv_dir, kv_file))
 
         self.screen_manager = ScreenManager(transition=SlideTransition())
+        self.screen_manager.add_widget(SplashScreen(name='splash'))
         self.screen_manager.add_widget(DashboardScreen(name='dashboard'))
         self.screen_manager.add_widget(BusTicketScreen(name='bus_ticket'))
         self.screen_manager.add_widget(DailyPassScreen(name='daily_pass'))
@@ -53,7 +55,7 @@ class AMGApp(MDApp):
         self.screen_manager.add_widget(ProfileScreen(name='profile'))
         self.screen_manager.add_widget(DiversionScreen(name='diversion'))
 
-        self.screen_manager.current = 'dashboard'
+        self.screen_manager.current = 'splash'
         Window.bind(on_keyboard=self.on_back_button)
         return self.screen_manager
 

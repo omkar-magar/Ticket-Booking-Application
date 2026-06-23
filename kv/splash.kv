@@ -1,0 +1,25 @@
+#:kivy 2.0
+
+<SplashScreen>:
+    md_bg_color: 1, 1, 1, 1
+
+    MDFloatLayout:
+        md_bg_color: 1, 1, 1, 1
+
+        # PMPML brand logo, centered — same asset as the native presplash so the
+        # hand-off from the Android splash to this screen looks seamless.
+        Image:
+            source: "assets/presplash.png"
+            mipmap: True
+            allow_stretch: True
+            keep_ratio: True
+            size_hint: None, None
+            size: dp(200), dp(200)
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+
+        MDSpinner:
+            size_hint: None, None
+            size: dp(36), dp(36)
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            active: True
+            color: 0.17, 0.75, 0.67, 1

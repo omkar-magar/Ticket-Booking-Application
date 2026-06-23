@@ -28,6 +28,10 @@ requirements = python3,kivy==2.3.1,kivymd==1.2.0,pillow,qrcode
 # (str) Presplash of the application
 presplash.filename = %(source.dir)s/assets/presplash.png
 
+# (str) Presplash background color (white) so the native Android splash matches
+# the in-app SplashScreen for a seamless hand-off.
+android.presplash_color = #FFFFFF
+
 # (str) Icon of the application
 icon.filename = %(source.dir)s/assets/app_icon.png
 
