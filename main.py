@@ -1,13 +1,17 @@
 import os
 import sys
-import platform
 from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager, SlideTransition
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.core.text import LabelBase
+from kivy.utils import platform as kivy_platform
 
-if platform.system() != "Linux":
+# Only force a phone-sized window on desktop (for previewing). On Android/iOS
+# the app must fill the real screen — never set Window.size there, or it renders
+# into a fixed box in the corner. Note: Python's platform.system() is unreliable
+# on Android, so use Kivy's platform detection instead.
+if kivy_platform not in ("android", "ios"):
     Window.size = (393, 852)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
