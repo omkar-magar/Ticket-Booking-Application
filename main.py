@@ -60,16 +60,34 @@ class AMGApp(MDApp):
 
     def on_start(self):
         # Defer the heavy screens until after the splash has rendered.
-        Clock.schedule_once(self._load_remaining_screens, 0)
+        # Build the dashboard first (the splash waits on it before advancing),
+        # then construct the remaining screens one per frame so no single frame
+        # janks while the splash is on screen.
+        Clock.schedule_once(self._build_dashboard, 0)
 
-    def _load_remaining_screens(self, *args):
+    def _build_dashboard(self, *args):
         self.screen_manager.add_widget(DashboardScreen(name='dashboard'))
-        self.screen_manager.add_widget(BusTicketScreen(name='bus_ticket'))
-        self.screen_manager.add_widget(DailyPassScreen(name='daily_pass'))
-        self.screen_manager.add_widget(ViewTicketScreen(name='view_ticket'))
-        self.screen_manager.add_widget(ViewPassScreen(name='view_pass'))
-        self.screen_manager.add_widget(ProfileScreen(name='profile'))
-        self.screen_manager.add_widget(DiversionScreen(name='diversion'))
+
+        # Secondary screens are not needed for the first interaction, so build
+        # them lazily — one at a time, each on its own frame — to spread the
+        # construction cost instead of hanging on a single heavy frame.
+        self._pending_screens = [
+            lambda: BusTicketScreen(name='bus_ticket'),
+            lambda: DailyPassScreen(name='daily_pass'),
+            lambda: ViewTicketScreen(name='view_ticket'),
+            lambda: ViewPassScreen(name='view_pass'),
+            lambda: ProfileScreen(name='profile'),
+            lambda: DiversionScreen(name='diversion'),
+        ]
+        Clock.schedule_once(self._build_next_screen, 0)
+
+    def _build_next_screen(self, *args):
+        if not self._pending_screens:
+            return
+        make_screen = self._pending_screens.pop(0)
+        self.screen_manager.add_widget(make_screen())
+        # Yield a frame between each screen so the UI stays responsive.
+        Clock.schedule_once(self._build_next_screen, 0)
 
     def on_back_button(self, window, key, *args):
         if key == 27:

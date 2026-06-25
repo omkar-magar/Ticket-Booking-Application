@@ -10,15 +10,14 @@
         MDBoxLayout:
             orientation: "horizontal"
             size_hint_y: None
-            height: dp(60)
+            height: dp(56)
             md_bg_color: 1, 1, 1, 1
-            padding: dp(12), dp(8), dp(12), dp(8)
+            padding: dp(10), dp(4), dp(10), dp(4)
 
             Image:
-                source: "assets/logo_icon.png"
-                mipmap: True
+                source: "assets/app_icon.png"
                 size_hint: None, None
-                size: dp(44), dp(44)
+                size: dp(46), dp(46)
                 pos_hint: {"center_y": 0.5}
                 allow_stretch: True
                 keep_ratio: True
@@ -249,8 +248,10 @@
                                     source: "assets/view_ticket_icon.png"
                                     mipmap: True
                                     allow_stretch: True
+                                    keep_ratio: True
                                     size_hint: None, None
-                                    size: dp(30), dp(30)
+                                    size: dp(23), dp(23)
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                         MDLabel:
                             text: "View\nTicket"
@@ -289,8 +290,10 @@
                                     source: "assets/view_pass_icon.png"
                                     mipmap: True
                                     allow_stretch: True
+                                    keep_ratio: True
                                     size_hint: None, None
-                                    size: dp(30), dp(30)
+                                    size: dp(23), dp(23)
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                         MDLabel:
                             text: "View\nPass"
@@ -328,8 +331,10 @@
                                     source: "assets/route_timetable_icon.png"
                                     mipmap: True
                                     allow_stretch: True
+                                    keep_ratio: True
                                     size_hint: None, None
-                                    size: dp(30), dp(30)
+                                    size: dp(28), dp(28)
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
                         MDLabel:
                             text: "Route Ti\nmetable"
@@ -423,7 +428,8 @@
                     padding: 0, 0, 0, 0
                     clip_children: True
 
-                    Image:
+                    # AsyncImage so this banner decodes off the main thread.
+                    AsyncImage:
                         source: "assets/upcoming_bus.jpg"
                         mipmap: True
                         allow_stretch: True
@@ -457,7 +463,10 @@
                             font_size: dp(40)
                             halign: "center"
 
-                        Image:
+                        # AsyncImage so this 700 KB map decodes on a background
+                        # thread; the map-marker MDIcon shows underneath until
+                        # the texture finishes loading.
+                        AsyncImage:
                             source: "assets/nearby_map_1080.png"
                             mipmap: True
                             allow_stretch: True

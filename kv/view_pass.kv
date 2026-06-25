@@ -3,20 +3,384 @@
 <ViewPassScreen>:
     MDBoxLayout:
         orientation: "vertical"
-        md_bg_color: 0.957, 0.961, 0.980, 1
+        md_bg_color: 1, 1, 1, 1
 
-        MDTopAppBar:
-            title: "View Pass"
-            left_action_items: [["arrow-left", lambda x: root.go_back()]]
-            md_bg_color: 0.17, 0.75, 0.67, 1
-            specific_text_color: 1, 1, 1, 1
-
+        # ── TOP BAR ───────────────────────────────────────────────
         MDBoxLayout:
-            orientation: "vertical"
-            padding: dp(20)
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(52)
+            md_bg_color: 1, 1, 1, 1
+            padding: dp(8), 0, dp(16), 0
+            spacing: dp(12)
+
+            MDIconButton:
+                icon: "close"
+                theme_icon_color: "Custom"
+                icon_color: 0.1, 0.1, 0.1, 1
+                icon_size: dp(26)
+                pos_hint: {"center_y": 0.5}
+                on_release: root.go_back()
+
+            Widget:
 
             MDLabel:
-                text: "View Pass Screen"
-                halign: "center"
-                theme_text_color: "Secondary"
-                font_style: "H6"
+                text: "Need Help?"
+                theme_text_color: "Custom"
+                text_color: 0.2, 0.2, 0.2, 1
+                font_size: dp(16)
+                underline: True
+                halign: "right"
+                valign: "center"
+                size_hint_x: None
+                width: dp(100)
+
+            MDLabel:
+                text: "All passes"
+                theme_text_color: "Custom"
+                text_color: 0.2, 0.2, 0.2, 1
+                font_size: dp(16)
+                underline: True
+                halign: "right"
+                valign: "center"
+                size_hint_x: None
+                width: dp(90)
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: dp(1)
+            md_bg_color: 0.93, 0.93, 0.93, 1
+
+        # ── BODY ──────────────────────────────────────────────────
+        ScrollView:
+            do_scroll_x: False
+            bar_width: 0
+
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: dp(16), dp(16), dp(16), dp(16)
+
+                # FloatLayout lets the diagonal INVALID stamp sit on top of the
+                # whole pass card. Its height tracks the card so it never adds
+                # extra space below.
+                FloatLayout:
+                    size_hint_y: None
+                    height: pass_card.height
+
+                    # ── PASS CARD ─────────────────────────────────
+                    MDCard:
+                        id: pass_card
+                        orientation: "vertical"
+                        md_bg_color: 1, 1, 1, 1
+                        radius: [dp(14)]
+                        elevation: 0
+                        line_color: 0.88, 0.88, 0.88, 1
+                        line_width: 1
+                        size_hint: 1, None
+                        height: self.minimum_height
+                        pos_hint: {"center_x": 0.5, "top": 1}
+                        padding: 0
+                        spacing: 0
+
+                        # Red header strip (PMPML, Marathi)
+                        MDBoxLayout:
+                            md_bg_color: 0.83, 0.18, 0.18, 1
+                            radius: [dp(14), dp(14), 0, 0]
+                            size_hint_y: None
+                            height: dp(48)
+                            padding: dp(12), 0, dp(12), 0
+
+                            MDLabel:
+                                text: "पुणे महानगर परिवहन महामंडळ लि."
+                                font_name: "Devanagari"
+                                halign: "center"
+                                valign: "center"
+                                size_hint: 1, 1
+                                theme_text_color: "Custom"
+                                text_color: 1, 1, 1, 1
+                                font_size: dp(14)
+
+                        # ── PASS TYPE / ID / FARE ─────────────────
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: dp(20), dp(16), dp(20), dp(16)
+                            spacing: dp(8)
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                size_hint_y: None
+                                height: dp(22)
+
+                                MDLabel:
+                                    text: "Pass Type"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.45, 0.45, 0.45, 1
+                                    font_size: dp(15)
+                                    valign: "center"
+
+                                MDLabel:
+                                    text: "ID"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.45, 0.45, 0.45, 1
+                                    font_size: dp(15)
+                                    halign: "left"
+                                    valign: "center"
+
+                                MDLabel:
+                                    text: "Fare"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.45, 0.45, 0.45, 1
+                                    font_size: dp(15)
+                                    halign: "right"
+                                    valign: "center"
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                size_hint_y: None
+                                height: self.minimum_height
+
+                                MDLabel:
+                                    text: root.pass_type
+                                    theme_text_color: "Custom"
+                                    text_color: 0.1, 0.1, 0.1, 1
+                                    bold: True
+                                    font_size: dp(24)
+                                    valign: "center"
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+
+                                EditableLabel:
+                                    text: root.pass_id
+                                    theme_text_color: "Custom"
+                                    text_color: 0.1, 0.1, 0.1, 1
+                                    bold: True
+                                    font_size: dp(24)
+                                    halign: "left"
+                                    valign: "center"
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+                                    on_release: root.edit_id()
+
+                                MDLabel:
+                                    text: root.fare
+                                    font_name: "Devanagari"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.1, 0.1, 0.1, 1
+                                    bold: True
+                                    font_size: dp(24)
+                                    halign: "right"
+                                    valign: "center"
+                                    size_hint_y: None
+                                    height: self.texture_size[1]
+
+                        # ── PERFORATION (with notches) ────────────
+                        Widget:
+                            size_hint_y: None
+                            height: dp(24)
+                            canvas.after:
+                                Color:
+                                    rgba: 1, 1, 1, 1
+                                Ellipse:
+                                    pos: self.x - dp(12), self.center_y - dp(12)
+                                    size: dp(24), dp(24)
+                                Ellipse:
+                                    pos: self.right - dp(12), self.center_y - dp(12)
+                                    size: dp(24), dp(24)
+                                Color:
+                                    rgba: 0.7, 0.7, 0.7, 1
+                                Line:
+                                    points: self.x + dp(16), self.center_y, self.right - dp(16), self.center_y
+                                    dash_length: dp(6)
+                                    dash_offset: dp(4)
+                                    width: 1
+
+                        # ── BOOKING / VALIDITY ────────────────────
+                        MDBoxLayout:
+                            orientation: "vertical"
+                            size_hint_y: None
+                            height: self.minimum_height
+                            padding: dp(20), dp(16), dp(20), dp(12)
+                            spacing: dp(6)
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                size_hint_y: None
+                                height: dp(22)
+
+                                MDLabel:
+                                    text: "Booking Time"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.45, 0.45, 0.45, 1
+                                    font_size: dp(15)
+                                    valign: "center"
+
+                                MDLabel:
+                                    text: "Validity Time"
+                                    theme_text_color: "Custom"
+                                    text_color: 0.45, 0.45, 0.45, 1
+                                    font_size: dp(15)
+                                    halign: "left"
+                                    valign: "center"
+
+                            MDBoxLayout:
+                                orientation: "horizontal"
+                                size_hint_y: None
+                                height: dp(28)
+
+                                MDLabel:
+                                    text: root.booking_time
+                                    theme_text_color: "Custom"
+                                    text_color: 0.1, 0.1, 0.1, 1
+                                    bold: True
+                                    font_size: dp(16)
+                                    valign: "center"
+
+                                MDLabel:
+                                    text: root.validity_time
+                                    theme_text_color: "Custom"
+                                    text_color: 0.1, 0.1, 0.1, 1
+                                    bold: True
+                                    font_size: dp(16)
+                                    halign: "left"
+                                    valign: "center"
+
+                            MDLabel:
+                                text: root.pass_no
+                                theme_text_color: "Custom"
+                                text_color: 0.2, 0.2, 0.2, 1
+                                font_size: dp(18)
+                                halign: "center"
+                                valign: "center"
+                                size_hint_y: None
+                                height: dp(40)
+
+                        # ── PASS TYPE BANNER (red strip) ──────────
+                        MDCard:
+                            md_bg_color: 0.83, 0.18, 0.18, 1
+                            radius: [0]
+                            elevation: 0
+                            size_hint_y: None
+                            height: dp(44)
+
+                            MDLabel:
+                                text: root.pass_label
+                                halign: "center"
+                                valign: "center"
+                                theme_text_color: "Custom"
+                                text_color: 1, 1, 1, 1
+                                bold: True
+                                font_size: dp(20)
+
+                        # ── LOGO ──────────────────────────────────
+                        AnchorLayout:
+                            anchor_x: "center"
+                            anchor_y: "center"
+                            size_hint_y: None
+                            height: dp(200)
+
+                            Image:
+                                id: pass_logo
+                                source: "assets/logo_icon.png"
+                                mipmap: True
+                                size_hint: None, None
+                                size: dp(152), dp(152)
+                                allow_stretch: True
+                                keep_ratio: True
+
+                        # ── STATUS ────────────────────────────────
+                        MDLabel:
+                            text: root.status
+                            theme_text_color: "Custom"
+                            text_color: (0.13, 0.6, 0.3, 1) if root.status == "Valid" else (0.55, 0.55, 0.55, 1)
+                            bold: True
+                            font_size: dp(20)
+                            halign: "center"
+                            valign: "center"
+                            size_hint_y: None
+                            height: dp(50)
+
+        # ── BOTTOM ACTION BAR ─────────────────────────────────────
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(76)
+            md_bg_color: 0.91, 0.97, 0.93, 1
+            padding: dp(16), dp(14), dp(16), dp(14)
+            spacing: dp(14)
+
+            MDCard:
+                md_bg_color: 1, 1, 1, 1
+                line_color: 0.13, 0.6, 0.3, 1
+                line_width: 1.2
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.show_qr()
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    padding: dp(10), 0, dp(10), 0
+
+                    Widget:
+
+                    MDIcon:
+                        icon: "qrcode"
+                        theme_icon_color: "Custom"
+                        icon_color: 0.13, 0.55, 0.3, 1
+                        font_size: dp(24)
+                        size_hint_x: None
+                        width: dp(28)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Show QR code"
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.45, 0.28, 1
+                        bold: True
+                        font_size: dp(17)
+                        valign: "center"
+                        size_hint_x: None
+                        width: dp(130)
+
+                    Widget:
+
+            MDCard:
+                md_bg_color: 1, 1, 1, 1
+                line_color: 0.13, 0.6, 0.3, 1
+                line_width: 1.2
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.verify()
+
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    spacing: dp(8)
+                    padding: dp(10), 0, dp(10), 0
+
+                    Widget:
+
+                    MDIcon:
+                        icon: "pencil"
+                        theme_icon_color: "Custom"
+                        icon_color: 0.13, 0.55, 0.3, 1
+                        font_size: dp(22)
+                        size_hint_x: None
+                        width: dp(26)
+                        pos_hint: {"center_y": 0.5}
+
+                    MDLabel:
+                        text: "Verify"
+                        theme_text_color: "Custom"
+                        text_color: 0.13, 0.45, 0.28, 1
+                        bold: True
+                        font_size: dp(17)
+                        valign: "center"
+                        size_hint_x: None
+                        width: dp(60)
+
+                    Widget:

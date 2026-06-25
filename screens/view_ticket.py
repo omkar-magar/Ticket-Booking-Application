@@ -7,9 +7,10 @@ from kivy.animation import Animation
 from kivy.metrics import dp
 from datetime import datetime, timedelta
 
-# Logo pulse (zoom in/out) sizes for the ticket page.
-LOGO_BASE = 150
-LOGO_ZOOM = 174
+# Logo pulse sizes for the ticket page. The logo starts at its base size and
+# shrinks down to LOGO_ZOOM, then back — a gentle "breathe in" pulse.
+LOGO_BASE = 152
+LOGO_ZOOM = 132
 
 # Mock PIN a conductor would enter to verify the ticket (frontend-only demo).
 CONDUCTOR_PIN = "1234"
@@ -56,6 +57,20 @@ class ViewTicketScreen(MDScreen):
         if logo:
             Animation.cancel_all(logo)
             logo.size = (dp(LOGO_BASE), dp(LOGO_BASE))
+
+    def edit_id(self):
+        # Tap-to-edit the ticket ID (ticket number). Opens a small dialog so the
+        # on-screen value keeps its exact font; new value applied in apply_id().
+        modal = Factory.EditIDModal()
+        modal.screen = self
+        modal.start_text = self.ticket_no
+        modal.open()
+
+    def apply_id(self, modal):
+        value = modal.ids.id_input.text.strip()
+        if value:
+            self.ticket_no = value
+        modal.dismiss()
 
     def show_qr(self):
         # Generate a QR encoding the ticket number and show it in a popup.

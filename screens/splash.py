@@ -4,19 +4,27 @@ from kivy.clock import Clock
 
 
 class SplashScreen(MDScreen):
-    # Seconds the branded splash stays before sliding into the dashboard.
-    SPLASH_DURATION = 2.5
+    # Minimum seconds to keep the brand visible so the splash never just flashes
+    # by, even when the dashboard builds quickly.
+    MIN_SPLASH = 1.2
+    # Safety cap so a slow/failed build can never leave the user stuck on the
+    # splash forever — advance regardless once this much time has elapsed.
+    MAX_SPLASH = 5.0
 
     def on_enter(self, *args):
-        # Auto-advance to the dashboard after a short, branded pause.
-        Clock.schedule_once(self._go_to_dashboard, self.SPLASH_DURATION)
+        # Instead of a fixed pause, advance as soon as the dashboard is built
+        # (it's constructed lazily after this screen renders). Wait at least
+        # MIN_SPLASH for the brand, then poll each frame until it's ready.
+        self._waited = 0.0
+        Clock.schedule_once(self._maybe_advance, self.MIN_SPLASH)
 
-    def _go_to_dashboard(self, *args):
+    def _maybe_advance(self, dt):
+        self._waited += dt
         app = App.get_running_app()
-        # The dashboard is built lazily after the splash renders. If it isn't
-        # ready yet, wait one more frame instead of failing and getting stuck.
-        if not app.root.has_screen("dashboard"):
-            Clock.schedule_once(self._go_to_dashboard, 0)
+        # Advance once the dashboard exists, or once the safety cap is hit.
+        if app.root.has_screen("dashboard") or self._waited >= self.MAX_SPLASH:
+            app.root.transition.direction = "left"
+            app.root.current = "dashboard"
             return
-        app.root.transition.direction = "left"
-        app.root.current = "dashboard"
+        # Not ready yet — check again next frame.
+        Clock.schedule_once(self._maybe_advance, 0)

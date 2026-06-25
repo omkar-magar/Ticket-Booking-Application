@@ -211,6 +211,110 @@
             height: dp(26)
 
 
+# Tappable label used for editable values (e.g. the ID). It is a plain MDLabel
+# plus button behaviour, so the displayed text keeps the exact same font — only
+# tapping it opens the edit dialog.
+<EditableLabel@ButtonBehavior+MDLabel>:
+
+
+# Small popup to edit a single value (the ID). The screen passes itself in so
+# the Save button can write the new value back via apply_id().
+<EditIDModal@ModalView>:
+    screen: None
+    start_text: ""
+    size_hint: 0.86, None
+    height: dp(214)
+    background: ""
+    background_color: 0, 0, 0, 0
+    overlay_color: 0, 0, 0, 0.5
+    auto_dismiss: True
+
+    MDCard:
+        orientation: "vertical"
+        md_bg_color: 1, 1, 1, 1
+        radius: [dp(16)]
+        elevation: 0
+        padding: dp(20), dp(18), dp(20), dp(16)
+        spacing: dp(14)
+
+        MDLabel:
+            text: "Edit ID"
+            theme_text_color: "Custom"
+            text_color: 0.1, 0.1, 0.1, 1
+            bold: True
+            font_size: dp(20)
+            halign: "center"
+            valign: "center"
+            size_hint_y: None
+            height: dp(28)
+
+        MDCard:
+            md_bg_color: 1, 1, 1, 1
+            line_color: 0.8, 0.8, 0.8, 1
+            line_width: 1
+            radius: [dp(8)]
+            elevation: 0
+            size_hint_y: None
+            height: dp(56)
+            padding: dp(16), 0, dp(16), 0
+
+            TextInput:
+                id: id_input
+                text: root.start_text
+                halign: "center"
+                foreground_color: 0.1, 0.1, 0.1, 1
+                background_color: 0, 0, 0, 0
+                cursor_color: 0.13, 0.6, 0.3, 1
+                font_size: dp(20)
+                multiline: False
+                size_hint_y: None
+                height: dp(40)
+                pos_hint: {"center_y": 0.5}
+                padding: [0, dp(8), 0, dp(8)]
+                background_normal: ""
+                background_active: ""
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: dp(48)
+            spacing: dp(12)
+
+            MDCard:
+                md_bg_color: 1, 1, 1, 1
+                line_color: 0.7, 0.7, 0.7, 1
+                line_width: 1.2
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.dismiss()
+
+                MDLabel:
+                    text: "Cancel"
+                    halign: "center"
+                    valign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 0.3, 0.3, 0.3, 1
+                    bold: True
+                    font_size: dp(17)
+
+            MDCard:
+                md_bg_color: 0.13, 0.6, 0.3, 1
+                radius: [dp(8)]
+                elevation: 0
+                ripple_behavior: True
+                on_release: root.screen.apply_id(root) if root.screen else None
+
+                MDLabel:
+                    text: "Save"
+                    halign: "center"
+                    valign: "center"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+                    bold: True
+                    font_size: dp(17)
+
+
 <ViewTicketScreen>:
     MDBoxLayout:
         orientation: "vertical"
@@ -286,10 +390,9 @@
                     spacing: 0
 
                     # Red header strip (PMPML, Marathi)
-                    MDCard:
+                    MDBoxLayout:
                         md_bg_color: 0.83, 0.18, 0.18, 1
                         radius: [dp(14), dp(14), 0, 0]
-                        elevation: 0
                         size_hint_y: None
                         height: dp(48)
                         padding: dp(12), 0, dp(12), 0
@@ -299,10 +402,10 @@
                             font_name: "Devanagari"
                             halign: "center"
                             valign: "center"
+                            size_hint: 1, 1
                             theme_text_color: "Custom"
                             text_color: 1, 1, 1, 1
-                            bold: True
-                            font_size: dp(18)
+                            font_size: dp(14)
 
                     # ── ROUTE / COUNT / FARE ──────────────────────
                     MDBoxLayout:
@@ -479,7 +582,7 @@
                                 halign: "left"
                                 valign: "center"
 
-                        MDLabel:
+                        EditableLabel:
                             text: root.ticket_no
                             theme_text_color: "Custom"
                             text_color: 0.2, 0.2, 0.2, 1
@@ -488,6 +591,7 @@
                             valign: "center"
                             size_hint_y: None
                             height: dp(40)
+                            on_release: root.edit_id()
 
                     # ── DASHED SEPARATOR ──────────────────────────
                     Widget:
@@ -514,7 +618,7 @@
                             source: "assets/logo_icon.png"
                             mipmap: True
                             size_hint: None, None
-                            size: dp(150), dp(150)
+                            size: dp(152), dp(152)
                             allow_stretch: True
                             keep_ratio: True
 
